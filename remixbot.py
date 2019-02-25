@@ -27,7 +27,7 @@ def get_admin_ids(bot, chat_id):
 @run_async
 def check(bot, update):
     
-    if (update.message.from_user.id in get_admin_ids(bot, update.message.chat_id)):
+    if (update.effective_user.id in get_admin_ids(bot, update.message.chat_id)):
         print(update.effective_user.full_name + " is an admin.")
     else:
         
