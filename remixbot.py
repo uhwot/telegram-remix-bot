@@ -45,7 +45,7 @@ def check(bot, update):
                 
                 time.sleep(120)
                 
-                if (update.effective_user.username == None):
+                if (update.effective_chat.get_member(update.effective_user.id)["user"]["username"] == None):
                     
                     update.effective_chat.kick_member(update.effective_user.id)
                     update.effective_chat.unban_member(update.effective_user.id)
