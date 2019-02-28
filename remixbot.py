@@ -1,7 +1,8 @@
 from telegram.ext import Updater, MessageHandler, CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
-import time, os
+import time, os, random
 from mwt import MWT
+from slap_msgs import SLAP_TEMPLATES, ITEMS, THROW, HIT
 
 import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -72,8 +73,16 @@ def slap(bot, update, args):
         if ((len(victim) < 6) | (len(victim) > 33)):
             update.message.reply_text("That user doesn't exist! This command only works with usernames.")
         else:
-            update.message.reply_text(update.effective_user.full_name + " slapped " + victim + "!")
-            print(update.effective_user.full_name + " slapped " + victim + "!")
+            
+            temp = random.choice(SLAP_TEMPLATES)
+            item = random.choice(ITEMS)
+            hit = random.choice(HIT)
+            throw = random.choice(THROW)
+            
+            user1 = update.effective_user.full_name
+            
+            update.message.reply_text(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
+            print(update.effective_user.full_name + " slapped " + user2 + "!")
 
 updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
 updater.dispatcher.add_handler(CommandHandler("slap", slap, pass_args=True, filters=Filters.chat(-1001366985278)), -1)
