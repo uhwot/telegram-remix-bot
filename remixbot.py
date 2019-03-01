@@ -61,16 +61,16 @@ def check(bot, update):
 def slap(bot, update, args):
     if (update.effective_user.username != None):
         if (args[0].startswith("@")):
-            victim = args[0]
+            user2 = args[0]
         else:
-            victim = "@" + args[0]
-        if ((victim == "@admin") | ("/" in victim)):
+            user2 = "@" + args[0]
+        if ((user2 == "@admin") | ("/" in user2)):
             update.message.delete()
             return
-        if (victim == "@deezremix_bot"):
+        if (user2 == "@deezremix_bot"):
             update.message.reply_text("Nah.")
             return
-        if ((len(victim) < 6) | (len(victim) > 33)):
+        if ((len(user2) < 6) | (len(user2) > 33)):
             update.message.reply_text("That user doesn't exist! This command only works with usernames.")
         else:
             
