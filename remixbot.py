@@ -58,50 +58,53 @@ def check(bot, update):
                     watchlist.remove(update.effective_user.id)
                     print(update.effective_user.full_name + " now has a username.")
 
-def slap(bot, update, args):
-    
-    if (update.effective_user.username != None):
+def slap(bot, update):
+    if ((update.message.text).startswith("#slap") == True):
         
-        if (update.effective_message.reply_to_message != None):
+        if (update.effective_user.username != None):
             
-            if (update.effective_message.reply_to_message.from_user.id == 760807185):
-                update.effective_message.reply_text("Nah.")
-                return
-            
-            user2 = ("[{}](tg://user?id={})").format(update.effective_message.reply_to_message.from_user.full_name, update.effective_message.reply_to_message.from_user.id)
-        else:
-            
-            try:
-                args[0]
-            except IndexError:
-                update.effective_message.reply_text("Reply to a message or type a username to use this command!")
-                return
-            
-            if (args[0].startswith("@")):
-                user2 = args[0]
+            if (update.effective_message.reply_to_message != None):
+                
+                if (update.effective_message.reply_to_message.from_user.id == 760807185):
+                    update.effective_message.reply_text("Nah.")
+                    return
+                
+                user2 = ("[{}](tg://user?id={})").format(update.effective_message.reply_to_message.from_user.full_name, update.effective_message.reply_to_message.from_user.id)
             else:
-                user2 = "@" + args[0]
+                
+                user2 = (update.message.text).split()
+                
+                try:
+                    user2[1]
+                except IndexError:
+                    update.effective_message.reply_text("Reply to a message or type a username to use this command!")
+                    return
+                
+                if (user2[1].startswith("@")):
+                    user2 = user2[1]
+                else:
+                    user2 = "@" + user2[1]
+                
+                if ((user2 == "@admin") | ("/" in user2)):
+                    update.effective_message.delete()
+                    return
+                if (user2 == "@deezremix_bot"):
+                    update.effective_message.reply_text("Nah.")
+                    return
+                if ((len(user2) < 6) | (len(user2) > 33)):
+                    update.effective_message.reply_text("That user doesn't exist! This command only works with usernames and replies.")
+                    return
             
-            if ((user2 == "@admin") | ("/" in user2)):
-                update.effective_message.delete()
-                return
-            if (user2 == "@deezremix_bot"):
-                update.effective_message.reply_text("Nah.")
-                return
-            if ((len(user2) < 6) | (len(user2) > 33)):
-                update.effective_message.reply_text("That user doesn't exist! This command only works with usernames and replies.")
-                return
-        
-        temp = random.choice(SLAP_TEMPLATES)
-        item = random.choice(ITEMS)
-        hit = random.choice(HIT)
-        throw = random.choice(THROW)
-        
-        user1 = ("[{}](tg://user?id={})").format(update.effective_user.full_name, update.effective_user.id)
-        
-        update.effective_message.reply_markdown(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
+            temp = random.choice(SLAP_TEMPLATES)
+            item = random.choice(ITEMS)
+            hit = random.choice(HIT)
+            throw = random.choice(THROW)
+            
+            user1 = ("[{}](tg://user?id={})").format(update.effective_user.full_name, update.effective_user.id)
+            
+            update.effective_message.reply_markdown(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
-updater.dispatcher.add_handler(CommandHandler("slap", slap, pass_args=True, filters=Filters.chat(-1001366985278)), -1)
+updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), slap), -1)
 print("Started.")
 updater.idle()
