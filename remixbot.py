@@ -105,6 +105,6 @@ def slap(bot, update):
             update.effective_message.reply_markdown(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
-updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), slap), -1)
+updater.dispatcher.add_handler(MessageHandler((Filters.chat(-1001366985278) & Filters.text), slap), -1)
 print("Started.")
 updater.idle()
