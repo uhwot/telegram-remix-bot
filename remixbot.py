@@ -59,7 +59,7 @@ def check(bot, update):
                     print(update.effective_user.full_name + " now has a username.")
 
 def slap(bot, update):
-    if ((update.message.text).startswith("#slap") == True):
+    if ((update.message.text).startswith("#slap")):
         
         if (update.effective_user.username != None):
             
