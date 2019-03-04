@@ -8,8 +8,8 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
-NAME = "appname"
-TOKEN = "sikeyouthought"
+NAME = os.environ.get("APPNAME")
+TOKEN = os.environ.get("TOKEN")
 PORT = os.environ.get('PORT')
 updater = Updater(TOKEN)
 # add handlers
