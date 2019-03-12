@@ -42,18 +42,22 @@ def check(bot, update):
             else:
                 print(update.effective_user.full_name + " has no username. Waiting...")
                 watchlist.append(update.effective_user.id)
-                update.effective_chat.send_message(update.effective_user.full_name + ", please get a username in 2 minutes, or you will be kicked.")
+                msg_id = update.effective_chat.send_message(update.effective_user.full_name + ", please get a username in 2 minutes, or you will be kicked.")["message_id"]
                 update.message.delete()
                 
                 time.sleep(120)
                 
+                bot.delete_message(update.effective_chat.id, msg_id)
+
                 if (update.effective_chat.get_member(update.effective_user.id)["user"]["username"] == None):
                     
                     update.effective_chat.kick_member(update.effective_user.id)
                     update.effective_chat.unban_member(update.effective_user.id)
                     watchlist.remove(update.effective_user.id)
                     print(update.effective_user.full_name + " has been kicked.")
-                    update.effective_chat.send_message(update.effective_user.full_name + " has been kicked.")
+                    msg_id = update.effective_chat.send_message(update.effective_user.full_name + " has been kicked.")["message_id"]
+                    time.sleep(120)
+                    bot.delete_message(update.effective_chat.id, msg_id)
                 
                 else:
                     watchlist.remove(update.effective_user.id)
