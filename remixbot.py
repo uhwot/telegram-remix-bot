@@ -1,5 +1,6 @@
 from telegram.ext import Updater, MessageHandler, CommandHandler, Filters
 from telegram.ext.dispatcher import run_async
+from telegram import ParseMode
 import time, os, random
 from mwt import MWT
 from slap_msgs import SLAP_TEMPLATES, ITEMS, THROW, HIT
@@ -70,6 +71,8 @@ def slap(bot, update):
                     return
                 
                 user2 = ("[{}](tg://user?id={})").format(update.effective_message.reply_to_message.from_user.full_name, update.effective_message.reply_to_message.from_user.id)
+                
+                reply = True
             else:
                 
                 user2 = (update.message.text).split()
@@ -94,6 +97,8 @@ def slap(bot, update):
                 if ((len(user2) < 6) | (len(user2) > 33)):
                     update.effective_message.reply_text("That user doesn't exist! This command only works with usernames and replies.")
                     return
+                
+                reply = False
             
             temp = random.choice(SLAP_TEMPLATES)
             item = random.choice(ITEMS)
@@ -102,7 +107,10 @@ def slap(bot, update):
             
             user1 = ("[{}](tg://user?id={})").format(update.effective_user.full_name, update.effective_user.id)
             
-            update.effective_message.reply_markdown(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
+            if(reply == True):
+                update.effective_chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=update.message.reply_to_message.message_id)
+            else:
+                update.effective_message.reply_markdown(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
 updater.dispatcher.add_handler(MessageHandler((Filters.chat(-1001366985278) & Filters.text), slap), -1)
