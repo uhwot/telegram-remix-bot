@@ -42,7 +42,7 @@ def check(bot, update):
             else:
                 print(update.effective_user.full_name + " has no username. Waiting...")
                 watchlist.append(update.effective_user.id)
-                msg_id = update.effective_chat.send_message(update.effective_user.full_name + ", please get a username in 2 minutes, or you will be kicked.")["message_id"]
+                msg_id = update.effective_chat.send_message(update.effective_user.full_name + ", please get a username in 2 minutes or you will be kicked.")["message_id"]
                 update.message.delete()
                 
                 time.sleep(120)
