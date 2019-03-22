@@ -79,7 +79,7 @@ def slap(bot, update):
             
             if (message.reply_to_message != None):
                 
-                if (message.reply_to_message.from_user.id == 760807185):
+                if (message.reply_to_message.from_user.id == bot.id):
                     message.reply_text("Nah.")
                     return
                 
@@ -104,7 +104,7 @@ def slap(bot, update):
                 if ((user2 == "@admin") | ("/" in user2)):
                     message.delete()
                     return
-                if (user2 == "@deezremix_bot"):
+                if (user2[1:] == bot.username):
                     message.reply_text("Nah.")
                     return
                 if ((len(user2) < 6) | (len(user2) > 33)):
