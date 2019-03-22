@@ -120,7 +120,7 @@ def slap(bot, update):
             
             user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
             
-            update.effective_chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
+            chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
 updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
 updater.dispatcher.add_handler(MessageHandler((Filters.chat(-1001366985278) & Filters.text), slap), -1)
