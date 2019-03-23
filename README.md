@@ -2,7 +2,7 @@
 
 Some random Telegram bot made with a bunch of spaghetti code that kicks people who don't have usernames.
 
-And yeah, this only works in one group.
+Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) group.
 
 # how 2 setup
 
