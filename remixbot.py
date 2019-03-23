@@ -9,15 +9,15 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
-NAME = os.environ.get("APPNAME")
+URL = os.environ.get("URL")
 TOKEN = os.environ.get("TOKEN")
-PORT = os.environ.get('PORT')
+PORT = os.environ.get("PORT")
 updater = Updater(TOKEN)
 # add handlers
 updater.start_webhook(listen="0.0.0.0",
                       port=int(PORT),
                       url_path=TOKEN)
-updater.bot.set_webhook("https://{}.herokuapp.com/{}".format(NAME, TOKEN))
+updater.bot.set_webhook(URL + TOKEN)
 
 watchlist = []
 
