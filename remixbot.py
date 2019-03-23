@@ -48,7 +48,7 @@ def check(bot, update):
             else:
                 print(user.full_name + " has no username. Waiting...")
                 watchlist.append(user.id)
-                msg_id = chat.send_message(user.full_name + ", please get a username in 2 minutes or you will be kicked.")["message_id"]
+                msg_id = chat.send_message(user.full_name + ", please [get a username](https://gitlab.com/uh_hey/telegram-remix-bot/wikis/How-to-set-a-username) in 2 minutes or you will be kicked.", ParseMode.MARKDOWN)["message_id"]
                 message.delete()
                 
                 time.sleep(120)
