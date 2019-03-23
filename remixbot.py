@@ -12,6 +12,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 URL = os.environ.get("URL")
 TOKEN = os.environ.get("TOKEN")
 PORT = os.environ.get("PORT")
+GROUP_ID = os.environ.get("GROUP_ID")
+
 updater = Updater(TOKEN)
 # add handlers
 updater.start_webhook(listen="0.0.0.0",
@@ -122,7 +124,12 @@ def slap(bot, update):
             
             chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
-updater.dispatcher.add_handler(MessageHandler(Filters.chat(-1001366985278), check))
-updater.dispatcher.add_handler(MessageHandler((Filters.chat(-1001366985278) & Filters.text), slap), -1)
+if GROUP_ID:
+    updater.dispatcher.add_handler(MessageHandler((Filters.chat(int(GROUP_ID)) & Filters.group), check))
+    updater.dispatcher.add_handler(MessageHandler((Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text), slap), -1)
+else:
+    updater.dispatcher.add_handler(MessageHandler(Filters.group, check))
+    updater.dispatcher.add_handler(MessageHandler((Filters.group & Filters.text), slap), -1)
+
 print("Started.")
 updater.idle()

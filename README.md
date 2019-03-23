@@ -12,6 +12,8 @@ And yeah, this only works in one group.
 
 - `URL`: The URL your webhook should connect to.
 
+- `GROUP_ID` (optional): The ID of the group where the bot should run. If not set, the bot will work in all groups.
+
 2. Move to the bot directory (hint: cd)
 
 3. Install the dependencies:
