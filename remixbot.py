@@ -1,4 +1,4 @@
-from telegram.ext import Updater, MessageHandler, CommandHandler, Filters
+from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram import ParseMode
 import time, os, random
