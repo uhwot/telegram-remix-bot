@@ -58,6 +58,7 @@ def check(bot, update):
                 if (chat.get_member(user.id)["user"]["username"] == None):
                     
                     chat.kick_member(user.id)
+                    watchlist.remove(user.id)
                     chat.unban_member(user.id)
                     print(user.full_name + " has been kicked.")
                     msg_id = chat.send_message(user.full_name + " has been kicked.")["message_id"]
@@ -65,9 +66,8 @@ def check(bot, update):
                     bot.delete_message(chat.id, msg_id)
                 
                 else:
+                    watchlist.remove(user.id)
                     print(update.effective_user.full_name + " now has a username.")
-                
-                watchlist.remove(user.id)
 
 def slap(bot, update):
     
