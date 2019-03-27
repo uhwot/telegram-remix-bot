@@ -9,17 +9,20 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
-URL = os.environ.get("URL")
 TOKEN = os.environ.get("TOKEN")
-PORT = os.environ.get("PORT")
+# optional vars
 GROUP_ID = os.environ.get("GROUP_ID")
+URL = os.environ.get("URL")
 
 updater = Updater(TOKEN)
-# add handlers
-updater.start_webhook(listen="0.0.0.0",
-                      port=int(PORT),
-                      url_path=TOKEN)
-updater.bot.set_webhook(URL + TOKEN)
+
+if URL:
+    PORT = os.environ.get("PORT")
+    # add handlers
+    updater.start_webhook(listen="0.0.0.0",
+                        port=int(PORT),
+                        url_path=TOKEN)
+    updater.bot.set_webhook(URL + TOKEN)
 
 watchlist = []
 
@@ -130,6 +133,9 @@ if GROUP_ID:
 else:
     updater.dispatcher.add_handler(MessageHandler(Filters.group, check))
     updater.dispatcher.add_handler(MessageHandler((Filters.group & Filters.text), slap), -1)
+
+if not URL:
+    updater.start_polling()
 
 print("Started.")
 updater.idle()
