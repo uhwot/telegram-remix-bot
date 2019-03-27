@@ -72,6 +72,7 @@ def check(bot, update):
                     watchlist.remove(user.id)
                     print(update.effective_user.full_name + " now has a username.")
 
+@run_async
 def slap(bot, update):
     
     user = update.effective_user
