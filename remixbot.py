@@ -18,7 +18,7 @@ updater = Updater(TOKEN)
 
 if URL:
     PORT = os.environ.get("PORT")
-    # add handlers
+    
     updater.start_webhook(listen="0.0.0.0",
                         port=int(PORT),
                         url_path=TOKEN)
