@@ -1,6 +1,7 @@
 import time
 import os
 import random
+import logging
 from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram import ParseMode
@@ -8,7 +9,6 @@ from telegram.utils.helpers import escape_markdown
 from mwt import MWT
 from slap_msgs import SLAP_TEMPLATES, ITEMS, THROW, HIT
 
-import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
 
