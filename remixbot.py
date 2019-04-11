@@ -6,6 +6,7 @@ from telegram.ext import Updater, MessageHandler, Filters
 from telegram.ext.dispatcher import run_async
 from telegram import ParseMode
 from telegram.utils.helpers import escape_markdown
+from telegram.error import BadRequest
 from mwt import MWT
 from slap_msgs import SLAP_TEMPLATES, ITEMS, THROW, HIT
 
@@ -58,7 +59,12 @@ def check(bot, update):
                 print(user.full_name + " has no username. Waiting...")
                 watchlist.append(user.id)
                 msg_id = chat.send_message("{}, please [get a username]({}) in 2 minutes or you will be kicked.".format(escape_markdown(user.full_name), guide), ParseMode.MARKDOWN)["message_id"]
-                message.delete()
+                
+                if not message.new_chat_members:
+                    try:
+                        message.delete()
+                    except BadRequest:
+                        pass
                 
                 time.sleep(120)
                 
