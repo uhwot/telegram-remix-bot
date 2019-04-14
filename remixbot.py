@@ -8,7 +8,7 @@ from telegram import ParseMode
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 from mwt import MWT
-from slap_msgs import SLAP_TEMPLATES, SLAP_SELF, ITEMS, THROW, HIT
+from slap_msgs import SLAP_TEMPLATES, SLAP_SELF, SLAP_BASIC, ITEMS, THROW, HIT
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -96,7 +96,9 @@ def slap(bot, update):
         if user.username:
             
             user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
+            user2 = None
             self = False
+            basic = False
             
             if message.reply_to_message:
                 
@@ -117,9 +119,7 @@ def slap(bot, update):
                 try:
                     user2[1]
                 except IndexError:
-                    
-                    user1 = ("[{}](tg://user?id={})").format(bot.first_name, bot.id)
-                    user2 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
+                    basic = True
                     
                 else:
                     
@@ -148,6 +148,8 @@ def slap(bot, update):
             
             if self:
                 temp = random.choice(SLAP_SELF)
+            elif basic:
+                temp = random.choice(SLAP_BASIC)
             else:
                 temp = random.choice(SLAP_TEMPLATES)
             
@@ -155,10 +157,7 @@ def slap(bot, update):
             hit = random.choice(HIT)
             throw = random.choice(THROW)
             
-            if self:
-                chat.send_message(temp.format(user1=user1, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
-            else:
-                chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
+            chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
 if GROUP_ID:
     check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group, check)

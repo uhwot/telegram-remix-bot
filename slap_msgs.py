@@ -9,7 +9,9 @@ SLAP_TEMPLATES = (
     "{user1} pins {user2} down and repeatedly {hits} them with a {item}.",
     "{user1} grabs up a {item} and {hits} {user2} with it.",
     "{user1} ties {user2} to a chair and {throws} a {item} at them.",
-    "{user1} gave a friendly push to help {user2} learn to swim in lava."
+    "{user1} gave a friendly push to help {user2} learn to swim in lava.",
+    "{user1} {hits} {user2} with a diamond sword.",
+    "{user1} used Splash! But nothing happened..."
 )
 
 SLAP_SELF = (
@@ -18,7 +20,16 @@ SLAP_SELF = (
     "{user1} {hits} themselves around a bit with a {item}... but why?",
     "{user1} hits their head against a wall... for some reason.",
     "{user1} launches themselves into space without a spacesuit... because they thought there was oxygen.",
-    "{user1} {hits} themselves with a {item} after looking at Windows 8's UI. They lost all hope of humanity."
+    "{user1} {hits} themselves with a {item} after looking at Windows 8's UI. They lost all hope of humanity.",
+    "{user1} is confused. They hurt themselves in their confusion."
+)
+
+SLAP_BASIC = (
+    "{user1} was squished too much.",
+    "{user1} fell from a high place.",
+    "{user1} suffocated in a wall.",
+    "{user1} was struck by lightning.",
+    "{user1} was squished by a falling anvil."
 )
 
 ITEMS = (
@@ -50,14 +61,14 @@ ITEMS = (
     "beehive",
     "piece of rotten meat",
     "bear",
-    "ton of bricks",
+    "ton of bricks"
 )
 
 THROW = (
     "throws",
     "flings",
     "chucks",
-    "hurls",
+    "hurls"
 )
 
 HIT = (
@@ -65,5 +76,5 @@ HIT = (
     "whacks",
     "slaps",
     "smacks",
-    "bashes",
+    "bashes"
 ) 
