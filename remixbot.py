@@ -162,7 +162,7 @@ def slap(bot, update):
 
 if GROUP_ID:
     check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group, check)
-    slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group & Filters.text, slap)
+    slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group and Filters.text, slap)
 else:
     check_handler = MessageHandler(Filters.group, check)
     slap_handler = MessageHandler(Filters.group and Filters.text, slap)
