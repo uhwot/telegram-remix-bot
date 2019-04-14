@@ -49,7 +49,7 @@ def check(bot, update):
         print(user.full_name + " is an admin.")
     else:
         
-        if user.username is None:
+        if not user.username:
             
             if user.id in watchlist:
                 message.delete()
@@ -70,7 +70,7 @@ def check(bot, update):
                 
                 bot.delete_message(chat.id, msg_id)
 
-                if chat.get_member(user.id)["user"]["username"] is None:
+                if not chat.get_member(user.id)["user"]["username"]:
                     
                     chat.kick_member(user.id)
                     watchlist.remove(user.id)
@@ -93,11 +93,11 @@ def slap(bot, update):
     
     if (message.text).startswith("#slap"):
         
-        if user.username is not None:
+        if user.username:
             
             user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
             
-            if message.reply_to_message is not None:
+            if message.reply_to_message:
                 
                 if message.reply_to_message.from_user.id == bot.id:
                     message.reply_text("Nah.")
