@@ -12,6 +12,15 @@ SLAP_TEMPLATES = (
     "{user1} gave a friendly push to help {user2} learn to swim in lava."
 )
 
+SLAP_SELF = (
+    "{user1} {hits} themselves with a {item} in their confusion!",
+    "{user1} {hits} themselves in the face with a {item}... what an idiot.",
+    "{user1} {hits} themselves around a bit with a {item}... but why?",
+    "{user1} hits their head against a wall... for some reason.",
+    "{user1} launches themselves into space without a spacesuit... because they thought there was oxygen.",
+    "{user1} {hits} themselves with a {item} after looking at Windows 8's UI. They lost all hope of humanity."
+)
+
 ITEMS = (
     "cast iron skillet",
     "large trout",

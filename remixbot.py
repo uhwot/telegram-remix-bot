@@ -8,7 +8,7 @@ from telegram import ParseMode
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 from mwt import MWT
-from slap_msgs import SLAP_TEMPLATES, ITEMS, THROW, HIT
+from slap_msgs import SLAP_TEMPLATES, SLAP_SELF, ITEMS, THROW, HIT
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -96,6 +96,7 @@ def slap(bot, update):
         if user.username:
             
             user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
+            self = False
             
             if message.reply_to_message:
                 
@@ -103,7 +104,10 @@ def slap(bot, update):
                     message.reply_text("Nah.")
                     return
                 
-                user2 = ("[{}](tg://user?id={})").format(message.reply_to_message.from_user.full_name, message.reply_to_message.from_user.id)
+                if user.id == message.reply_to_message.from_user.id:
+                    self = True
+                else:
+                    user2 = ("[{}](tg://user?id={})").format(message.reply_to_message.from_user.full_name, message.reply_to_message.from_user.id)
                 
                 reply_msg = message.reply_to_message.message_id
             else:
@@ -130,20 +134,31 @@ def slap(bot, update):
                     if user2[1:] == bot.username:
                         message.reply_text("Nah.")
                         return
-                    if len(user2) < 6 or len(user2) > 33:
-                        message.reply_text("That user doesn't exist!")
-                        return
-                    
-                    user2 = escape_markdown(user2)
+                    if user2[1:] == user.username:
+                        self = True
+                    else:
+                        
+                        if len(user2) < 6 or len(user2) > 33:
+                            message.reply_text("That user doesn't exist!")
+                            return
+                        
+                        user2 = escape_markdown(user2)
                 
                 reply_msg = message.message_id
             
-            temp = random.choice(SLAP_TEMPLATES)
+            if self:
+                temp = random.choice(SLAP_SELF)
+            else:
+                temp = random.choice(SLAP_TEMPLATES)
+            
             item = random.choice(ITEMS)
             hit = random.choice(HIT)
             throw = random.choice(THROW)
             
-            chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
+            if self:
+                chat.send_message(temp.format(user1=user1, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
+            else:
+                chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
 if GROUP_ID:
     check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group, check)
