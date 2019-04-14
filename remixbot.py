@@ -95,6 +95,8 @@ def slap(bot, update):
         
         if user.username is not None:
             
+            user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
+            
             if message.reply_to_message is not None:
                 
                 if message.reply_to_message.from_user.id == bot.id:
@@ -111,25 +113,28 @@ def slap(bot, update):
                 try:
                     user2[1]
                 except IndexError:
-                    message.reply_text("Reply to a message or type a username to use this command!")
-                    return
-                
-                if user2[1].startswith("@"):
-                    user2 = user2[1]
+                    
+                    user1 = ("[{}](tg://user?id={})").format(bot.first_name, bot.id)
+                    user2 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
+                    
                 else:
-                    user2 = "@" + user2[1]
-                
-                if user2 == "@admin" or "/" in user2:
-                    message.delete()
-                    return
-                if user2[1:] == bot.username:
-                    message.reply_text("Nah.")
-                    return
-                if len(user2) < 6 or len(user2) > 33:
-                    message.reply_text("That user doesn't exist! This command only works with usernames and replies.")
-                    return
-                
-                user2 = escape_markdown(user2)
+                    
+                    if user2[1].startswith("@"):
+                        user2 = user2[1]
+                    else:
+                        user2 = "@" + user2[1]
+                    
+                    if user2 == "@admin" or "/" in user2:
+                        message.delete()
+                        return
+                    if user2[1:] == bot.username:
+                        message.reply_text("Nah.")
+                        return
+                    if len(user2) < 6 or len(user2) > 33:
+                        message.reply_text("That user doesn't exist!")
+                        return
+                    
+                    user2 = escape_markdown(user2)
                 
                 reply_msg = message.message_id
             
@@ -137,8 +142,6 @@ def slap(bot, update):
             item = random.choice(ITEMS)
             hit = random.choice(HIT)
             throw = random.choice(THROW)
-            
-            user1 = ("[{}](tg://user?id={})").format(user.full_name, user.id)
             
             chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
