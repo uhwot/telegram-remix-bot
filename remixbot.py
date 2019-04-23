@@ -70,7 +70,8 @@ def check(bot, update):
                 
                 bot.delete_message(chat.id, msg_id)
 
-                if not chat.get_member(user.id)["user"]["username"]:
+                if not chat.get_member(user.id)["user"]["username"] \
+                and chat.get_member(user.id)["status"] not in ("left" or "kicked"):
                     
                     chat.kick_member(user.id)
                     watchlist.remove(user.id)
@@ -82,7 +83,7 @@ def check(bot, update):
                 
                 else:
                     watchlist.remove(user.id)
-                    print(user.full_name + " now has a username.")
+                    print(user.full_name + " now has a username or has left.")
 
 @run_async
 def slap(bot, update):
