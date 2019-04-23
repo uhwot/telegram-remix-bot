@@ -73,9 +73,8 @@ def check(bot, update):
                 if not chat.get_member(user.id)["user"]["username"] \
                 and chat.get_member(user.id)["status"] not in ("left", "kicked"):
                     
-                    chat.kick_member(user.id)
+                    chat.unban_member(user.id) # unban on user = kick
                     watchlist.remove(user.id)
-                    chat.unban_member(user.id)
                     print(user.full_name + " has been kicked.")
                     msg_id = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")["message_id"]
                     time.sleep(120)
