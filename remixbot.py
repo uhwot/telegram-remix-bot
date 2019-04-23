@@ -71,7 +71,7 @@ def check(bot, update):
                 bot.delete_message(chat.id, msg_id)
 
                 if not chat.get_member(user.id)["user"]["username"] \
-                and chat.get_member(user.id)["status"] not in ("left" or "kicked"):
+                and chat.get_member(user.id)["status"] not in ("left", "kicked"):
                     
                     chat.kick_member(user.id)
                     watchlist.remove(user.id)
