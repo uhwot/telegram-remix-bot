@@ -114,19 +114,15 @@ def slap(bot, update):
                 reply_msg = message.reply_to_message.message_id
             else:
                 
-                user2 = message.text.split()
-                
                 try:
-                    user2[1]
+                    user2 = message.text.split()[1]
                 except IndexError:
                     basic = True
                     
                 else:
                     
-                    if user2[1].startswith("@"):
-                        user2 = user2[1]
-                    else:
-                        user2 = "@" + user2[1]
+                    if not user2.startswith("@"):
+                        user2 = "@" + user2
                     
                     if user2 == "@admin" or "/" in user2:
                         message.delete()
