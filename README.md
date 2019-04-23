@@ -14,6 +14,8 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `URL` (optional): The URL your webhook should connect to. If not set, the bot will use long polling instead.
 
+- `PORT` (optional): Port to use for your webhooks.
+
 2. Move to the bot directory (hint: cd)
 
 3. Install the dependencies:
