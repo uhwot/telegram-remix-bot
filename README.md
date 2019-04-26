@@ -16,6 +16,8 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `PORT` (optional): Port to use for your webhooks.
 
+- `CERT_PATH` (optional): Path to your webhook certificate.
+
 2. Move to the bot directory (hint: cd)
 
 3. Install the dependencies:

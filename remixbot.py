@@ -23,11 +23,16 @@ dispatcher = updater.dispatcher
 
 if URL:
     PORT = os.environ.get("PORT")
+    CERT_PATH = os.environ.get("CERT_PATH")
     
-    updater.start_webhook(listen="0.0.0.0",
+    updater.start_webhook(listen="127.0.0.1",
                         port=int(PORT),
                         url_path=TOKEN)
-    updater.bot.set_webhook(URL + TOKEN)
+    if CERT_PATH:
+        updater.bot.set_webhook(URL + TOKEN,
+                                certificate=open(CERT_PATH, "rb"))
+    else:
+        updater.bot.set_webhook(URL + TOKEN)
 
 watchlist = []
 
