@@ -161,11 +161,11 @@ def slap(bot, update):
             chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
 if GROUP_ID:
-    check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group, check)
-    slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) and Filters.group and Filters.text, slap)
+    check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group, check)
+    slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, slap)
 else:
     check_handler = MessageHandler(Filters.group, check)
-    slap_handler = MessageHandler(Filters.group and Filters.text, slap)
+    slap_handler = MessageHandler(Filters.group & Filters.text, slap)
     
 dispatcher.add_handler(check_handler)
 dispatcher.add_handler(slap_handler, 1)
