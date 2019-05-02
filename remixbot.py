@@ -51,17 +51,17 @@ def check(bot, update):
     guide = "https://gitlab.com/uh_hey/telegram-remix-bot/wikis/How-to-set-a-username"
     
     if user.id in get_admin_ids(bot, chat.id):
-        print(user.full_name + " is an admin.")
+        logging.info(user.full_name + " is an admin.")
     else:
         
         if not user.username:
             
             if user.id in watchlist:
                 message.delete()
-                print("Deleted message from " + user.full_name)
+                logging.info("Deleted message from " + user.full_name)
             
             else:
-                print(user.full_name + " has no username. Waiting...")
+                logging.info(user.full_name + " has no username. Waiting...")
                 watchlist.append(user.id)
                 msg_id = chat.send_message("{}, please [get a username]({}) in 2 minutes or you will be kicked.".format(escape_markdown(user.full_name), guide), ParseMode.MARKDOWN)["message_id"]
                 
@@ -80,14 +80,14 @@ def check(bot, update):
                     
                     chat.unban_member(user.id) # unban on user = kick
                     watchlist.remove(user.id)
-                    print(user.full_name + " has been kicked.")
+                    logging.info(user.full_name + " has been kicked.")
                     msg_id = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")["message_id"]
                     time.sleep(120)
                     bot.delete_message(chat.id, msg_id)
                 
                 else:
                     watchlist.remove(user.id)
-                    print(user.full_name + " now has a username or has left.")
+                    logging.info(user.full_name + " now has a username or has left.")
 
 @run_async
 def slap(bot, update):
@@ -173,5 +173,5 @@ dispatcher.add_handler(slap_handler, 1)
 if not URL:
     updater.start_polling()
 
-print("Started.")
+logging.info("Started.")
 updater.idle()
