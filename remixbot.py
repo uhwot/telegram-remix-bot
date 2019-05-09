@@ -8,7 +8,7 @@ from telegram import ParseMode
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 from mwt import MWT
-from slap_msgs import SLAP_TEMPLATES, SLAP_SELF, SLAP_BASIC, ITEMS, THROW, HIT
+from slap_msgs import *
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                      level=logging.INFO)
@@ -160,15 +160,27 @@ def slap(bot, update):
             
             chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
 
+@run_async
+def runs(bot, update):
+    message = update.effective_message
+    
+    if (message.text).startswith("#runs"):
+        if update.effective_user.username:
+            
+            message.reply_text(random.choice(RUN_STRINGS))
+
 if GROUP_ID:
     check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group, check)
     slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, slap)
+    runs_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, runs)
 else:
     check_handler = MessageHandler(Filters.group, check)
     slap_handler = MessageHandler(Filters.group & Filters.text, slap)
+    runs_handler = MessageHandler(Filters.group & Filters.text, runs)
     
 dispatcher.add_handler(check_handler)
 dispatcher.add_handler(slap_handler, 1)
+dispatcher.add_handler(runs_handler, 2)
 
 if not URL:
     updater.start_polling()
