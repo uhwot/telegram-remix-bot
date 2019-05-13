@@ -57,7 +57,7 @@ ITEMS = (
     "spiked bat",
     "fire extinguisher",
     "heavy rock",
-    "chunk of dirt",
+    "block of dirt",
     "beehive",
     "piece of rotten meat",
     "bear",
