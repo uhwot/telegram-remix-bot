@@ -48,7 +48,7 @@ def check(bot, update):
     message = update.effective_message
     chat = update.effective_chat
     
-    guide = "https://gitlab.com/uh_hey/telegram-remix-bot/wikis/How-to-set-a-username"
+    guide = "https://gitlab.com/uh_wot/telegram-remix-bot/wikis/How-to-set-a-username"
     
     if user.id in get_admin_ids(bot, chat.id):
         logging.info(user.full_name + " is an admin.")
