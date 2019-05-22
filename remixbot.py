@@ -123,27 +123,25 @@ def slap(bot, update):
                     user2 = message.text.split()[1]
                 except IndexError:
                     basic = True
-                    
                 else:
                     
-                    if not user2.startswith("@"):
-                        user2 = "@" + user2
-                    
-                    if user2 == "@admin" or "/" in user2:
+                    if user2 == "admin" or "/" in user2:
                         message.delete()
                         return
-                    if user2[1:] == bot.username:
+                    if user2 == bot.username:
                         message.reply_text("Nah.")
                         return
-                    if user2[1:] == user.username:
+                    if user2 == user.username:
                         self = True
                     else:
                         
-                        if len(user2) < 6 or len(user2) > 33:
+                        if len(user2) < 5 or len(user2) > 32:
                             message.reply_text("That user doesn't exist!")
                             return
                         
                         user2 = escape_markdown(user2)
+                        if not user2.startswith("@"):
+                            user2 = "@" + user2
                 
                 reply_msg = message.message_id
             
