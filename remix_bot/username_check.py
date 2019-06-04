@@ -1,6 +1,7 @@
 import time
 import logging
 
+from telegram import ParseMode
 from telegram.ext import run_async, MessageHandler, Filters
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
