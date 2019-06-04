@@ -1,1 +1,1 @@
-web: python3 remixbot.py
+web: python3 -m remix_bot

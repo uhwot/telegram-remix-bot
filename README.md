@@ -12,11 +12,13 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `GROUP_ID` (optional): The ID of the group where the bot should run. If not set, the bot will work in all groups.
 
-- `URL` (optional): The URL your webhook should connect to. If not set, the bot will use long polling instead.
+- `URL` (webhooks): The URL your webhook should connect to. If not set, the bot will use long polling instead.
 
-- `PORT` (optional): Port to use for your webhooks.
+- `PORT` (webhooks): Port to use for your webhooks.
 
-- `CERT_PATH` (optional): Path to your webhook certificate.
+- `CERT_PATH` (webhooks): Path to your webhook certificate.
+
+- `DB_URL` (database): Your MongoDB database URL. If not set, the whitelist and username logger won't be available.
 
 2. Move to the bot directory (hint: cd)
 
@@ -28,4 +30,4 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 1. Move to the bot directory (hint: cd)
 
-2. Run: `python3 remixbot.py`
+2. Run: `python3 -m remix_bot`
