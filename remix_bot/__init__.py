@@ -57,7 +57,7 @@ def get_name(username):
 
 def insert_user(id, username, name):
     temp = {"id": id, "username": username, "name": name}
-    return userlog.replace_one({"username": username}, temp, upsert=True)
+    return userlog.replace_one({"id": id}, temp, upsert=True)
 
 
 def whitelisted(user_id, chat_id):
