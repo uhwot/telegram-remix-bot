@@ -1,7 +1,7 @@
 import logging
 
-from remix_bot import updater, dispatcher
-from remix_bot import TOKEN, GROUP_ID, URL, PORT, CERT_PATH, DB_URL
+from remix_bot import updater
+from remix_bot import TOKEN, URL, PORT, CERT_PATH, DB_URL
 
 if URL:
     updater.start_webhook(listen="0.0.0.0",
