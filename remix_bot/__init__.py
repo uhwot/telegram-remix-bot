@@ -1,6 +1,7 @@
 import os
 import logging
 import pymongo
+import re
 
 from telegram.ext import Updater
 
@@ -39,7 +40,7 @@ def get_admin_ids(bot, chat_id):
 
 def get_id(username):
     try:
-        temp = userlog.find_one({"username": username}, {"id": 1})["id"]
+        temp = userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"id": 1})["id"]
     except TypeError:
         raise KeyError
     else:
@@ -48,7 +49,7 @@ def get_id(username):
 
 def get_name(username):
     try:
-        temp = userlog.find_one({"username": username}, {"name": 1})["name"]
+        temp = userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"name": 1})["name"]
     except TypeError:
         raise KeyError
     else:

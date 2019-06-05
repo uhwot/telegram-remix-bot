@@ -47,13 +47,15 @@ def slap(bot, update):
             basic = True
         else:
 
-            if user2 == "admin" or "/" in user2:
+            temp = user2.lower()
+
+            if temp == "admin" or "/" in temp:
                 message.delete()
                 return
-            if user2 == bot.username:
+            if temp == bot.username.lower():
                 message.reply_text("Nah.")
                 return
-            if user2 == user.username:
+            if temp == user.username.lower():
                 self = True
             else:
 
