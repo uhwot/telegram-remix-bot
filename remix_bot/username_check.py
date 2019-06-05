@@ -1,12 +1,12 @@
 import time
 import logging
 
-from telegram import ParseMode
+from telegram import ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import run_async, MessageHandler, Filters
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import GROUP_ID, dispatcher, get_admin_ids, whitelisted
+from remix_bot import GROUP_ID, dispatcher, get_admin_ids, build_menu, whitelisted
 
 watchlist = []
 
@@ -38,7 +38,12 @@ def check(bot, update):
 
     logging.info(user.full_name + " has no username. Waiting...")
     watchlist.append(user.id)
-    msg_id = chat.send_message("{}, please [get a username]({}) in 2 minutes or you will be kicked.".format(escape_markdown(user.full_name), guide), ParseMode.MARKDOWN)["message_id"]
+
+    temp = escape_markdown(user.full_name) + ", please get a username in 2 minutes or you will be kicked."
+    button = [InlineKeyboardButton("How to set a username", url=guide)]
+    reply_markup = InlineKeyboardMarkup(build_menu(button, n_cols=1))
+
+    msg_id = chat.send_message(temp, ParseMode.MARKDOWN, reply_markup=reply_markup)["message_id"]
 
     if not message.new_chat_members:
         try:
