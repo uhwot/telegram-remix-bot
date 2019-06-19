@@ -19,11 +19,11 @@ if URL:
 else:
     logging.info("Webhooks disabled, using long polling instead.")
 
-import remix_bot.username_check
-import remix_bot.fun
+import remix_bot.modules.username_check
+import remix_bot.modules.fun
 if DB_URL:
     logging.info("Database enabled.")
-    import remix_bot.database
+    import remix_bot.modules.database
 else:
     logging.info("Database disabled.")
 

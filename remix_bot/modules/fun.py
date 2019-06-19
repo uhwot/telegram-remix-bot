@@ -4,7 +4,8 @@ from telegram import ParseMode
 from telegram.ext import run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import DB_URL, GROUP_ID, whitelisted, get_id, get_name, dispatcher
+from remix_bot import DB_URL, GROUP_ID, dispatcher
+from remix_bot.utils import whitelisted, get_id, get_name
 from remix_bot.slap_msgs import *
 
 

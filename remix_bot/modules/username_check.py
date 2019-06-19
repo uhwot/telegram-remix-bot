@@ -6,7 +6,8 @@ from telegram.ext import run_async, MessageHandler, Filters
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import GROUP_ID, dispatcher, get_admin_ids, build_menu, whitelisted
+from remix_bot import GROUP_ID, dispatcher
+from remix_bot.utils import get_admin_ids, build_menu, whitelisted
 
 watchlist = []
 
