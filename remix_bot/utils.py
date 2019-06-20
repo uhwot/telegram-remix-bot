@@ -31,20 +31,16 @@ def build_menu(buttons,
 
 def get_id(username):
     try:
-        temp = userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"id": 1})["id"]
+        return userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"id": 1})["id"]
     except TypeError:
         raise KeyError
-    else:
-        return temp
 
 
 def get_name(username):
     try:
-        temp = userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"name": 1})["name"]
+        return userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"name": 1})["name"]
     except TypeError:
         raise KeyError
-    else:
-        return temp
 
 
 def insert_user(id, username, name):
