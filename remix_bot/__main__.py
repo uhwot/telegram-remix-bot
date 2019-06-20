@@ -32,3 +32,5 @@ if not URL:
     updater.start_polling()
 
 logging.info("Started.")
+updater.idle()
+
