@@ -20,7 +20,10 @@ def check(bot, update):
     chat = update.effective_chat
 
     guide = "https://gitlab.com/uh_wot/telegram-remix-bot/wikis/How-to-set-a-username"
-
+    
+    if user.id == 777000: # channel messages
+    	return
+    
     if user.id in get_admin_ids(bot, chat.id):
         logging.info(user.full_name + " is an admin.")
         return
