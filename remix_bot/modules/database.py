@@ -42,7 +42,7 @@ def whitelist_mngr(bot, update):
     user = update.effective_user
     chat = update.effective_chat
 
-    if not message.text.split()[0] == "#addwhitelist" and not message.text.split()[0] == "#rmwhitelist":
+    if message.text.split()[0] not in ("#addwhitelist", "#rmwhitelist"):
         return
 
     if user.id not in get_admin_ids(bot, chat.id):
