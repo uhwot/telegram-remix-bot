@@ -21,8 +21,8 @@ def check(bot, update):
 
     guide = "https://gitlab.com/uh_wot/telegram-remix-bot/wikis/How-to-set-a-username"
     
-    if user.id == 777000: # channel messages
-    	return
+    if user.id == 777000:  # channel messages
+        return
     
     if user.id in get_admin_ids(bot, chat.id):
         logging.info(user.full_name + " is an admin.")
@@ -62,7 +62,7 @@ def check(bot, update):
     if not chat.get_member(user.id)["user"]["username"] \
     and chat.get_member(user.id)["status"] not in ("left", "kicked"):
 
-        chat.unban_member(user.id) # unban on user = kick
+        chat.unban_member(user.id)  # unban on user = kick
         watchlist.remove(user.id)
         logging.info(user.full_name + " has been kicked.")
         msg_id = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")["message_id"]
