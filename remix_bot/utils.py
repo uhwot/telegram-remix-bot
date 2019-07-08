@@ -3,8 +3,8 @@ import re
 
 from telegram.ext import BaseFilter
 
-from remix_bot import DB_URL, GROUP_ID
-from remix_bot.mwt import MWT
+from . import DB_URL, GROUP_ID
+from .mwt import MWT
 
 db_client = pymongo.MongoClient(DB_URL)
 whitelist_db = db_client["whitelist"]

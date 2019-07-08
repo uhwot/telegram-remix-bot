@@ -4,8 +4,8 @@ from telegram.ext import MessageHandler, Filters, run_async
 from telegram import ParseMode
 from telegram.error import BadRequest
 
-from remix_bot import dispatcher
-from remix_bot.utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_filter
+from .. import dispatcher
+from ..utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_filter
 
 
 @run_async

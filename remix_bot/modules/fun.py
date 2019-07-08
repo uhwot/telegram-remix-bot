@@ -4,9 +4,9 @@ from telegram import ParseMode
 from telegram.ext import run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import DB_URL, dispatcher
-from remix_bot.utils import whitelisted, get_id, get_name, group_id_filter
-from remix_bot.slap_msgs import *
+from .. import DB_URL, dispatcher
+from ..utils import whitelisted, get_id, get_name, group_id_filter
+from ..slap_msgs import *
 
 
 @run_async
