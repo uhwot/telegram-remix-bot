@@ -1,7 +1,9 @@
 import pymongo
 import re
 
-from remix_bot import DB_URL
+from telegram.ext import BaseFilter
+
+from remix_bot import DB_URL, GROUP_ID
 from remix_bot.mwt import MWT
 
 db_client = pymongo.MongoClient(DB_URL)
@@ -9,6 +11,20 @@ whitelist_db = db_client["whitelist"]
 
 global_db = db_client["global"]
 userlog = global_db["users"]
+
+
+class GroupIDFilter(BaseFilter):
+    def filter(self, message):
+        if not GROUP_ID:
+            return True
+
+        if str(message.chat_id) in GROUP_ID:
+            return True
+        else:
+            return False
+
+
+group_id_filter = GroupIDFilter()
 
 
 @MWT(timeout=3600)

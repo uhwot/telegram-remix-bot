@@ -4,8 +4,8 @@ from telegram.ext import MessageHandler, Filters, run_async
 from telegram import ParseMode
 from telegram.error import BadRequest
 
-from remix_bot import dispatcher, GROUP_ID
-from remix_bot.utils import get_admin_ids, get_id, whitelist_db, insert_user
+from remix_bot import dispatcher
+from remix_bot.utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_filter
 
 
 @run_async
@@ -111,14 +111,9 @@ def user_logger(bot, update):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-if GROUP_ID:
-    whitelistmngr_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, whitelist_mngr)
-    whitelist_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, whitelist_check)
-    userlogger_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group, user_logger)
-else:
-    whitelistmngr_handler = MessageHandler(Filters.group & Filters.text, whitelist_mngr)
-    whitelist_handler = MessageHandler(Filters.group & Filters.text, whitelist_check)
-    userlogger_handler = MessageHandler(Filters.group, user_logger)
+whitelistmngr_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, whitelist_mngr)
+whitelist_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, whitelist_check)
+userlogger_handler = MessageHandler(group_id_filter & Filters.group, user_logger)
 
 dispatcher.add_handler(userlogger_handler, 3)
 dispatcher.add_handler(whitelistmngr_handler, 4)

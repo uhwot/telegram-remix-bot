@@ -8,7 +8,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 
 TOKEN = os.environ.get("TOKEN")
 # optional vars
-GROUP_ID = os.environ.get("GROUP_ID")
+GROUP_ID = os.environ.get("GROUP_ID").split()
 # webhooks
 URL = os.environ.get("URL")
 PORT = os.environ.get("PORT")

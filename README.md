@@ -10,7 +10,7 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `TOKEN`: Your bot token from [@BotFather](https://t.me/BotFather).
 
-- `GROUP_ID` (optional): The ID of the group where the bot should run. If not set, the bot will work in all groups.
+- `GROUP_ID` (optional): The ID of the group where the bot should run. You can also specify multiple IDs by separating them with spaces. If not set, the bot will work in all groups.
 
 - `URL` (webhooks): The URL your webhook should connect to. If not set, the bot will use long polling instead.
 

@@ -6,8 +6,8 @@ from telegram.ext import run_async, MessageHandler, Filters
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import GROUP_ID, dispatcher
-from remix_bot.utils import get_admin_ids, build_menu, whitelisted
+from remix_bot import dispatcher
+from remix_bot.utils import get_admin_ids, build_menu, whitelisted, group_id_filter
 
 watchlist = []
 
@@ -74,9 +74,6 @@ def check(bot, update):
         logging.info(user.full_name + " now has a username or has left.")
 
 
-if GROUP_ID:
-    check_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group, check)
-else:
-    check_handler = MessageHandler(Filters.group, check)
+check_handler = MessageHandler(group_id_filter & Filters.group, check)
 
 dispatcher.add_handler(check_handler)

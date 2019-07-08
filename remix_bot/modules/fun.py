@@ -4,8 +4,8 @@ from telegram import ParseMode
 from telegram.ext import run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
-from remix_bot import DB_URL, GROUP_ID, dispatcher
-from remix_bot.utils import whitelisted, get_id, get_name
+from remix_bot import DB_URL, dispatcher
+from remix_bot.utils import whitelisted, get_id, get_name, group_id_filter
 from remix_bot.slap_msgs import *
 
 
@@ -99,12 +99,8 @@ def runs(bot, update):
     message.reply_text(random.choice(RUN_STRINGS))
 
 
-if GROUP_ID:
-    slap_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, slap)
-    runs_handler = MessageHandler(Filters.chat(int(GROUP_ID)) & Filters.group & Filters.text, runs)
-else:
-    slap_handler = MessageHandler(Filters.group & Filters.text, slap)
-    runs_handler = MessageHandler(Filters.group & Filters.text, runs)
+slap_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, slap)
+runs_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, runs)
 
 dispatcher.add_handler(slap_handler, 1)
 dispatcher.add_handler(runs_handler, 2)
