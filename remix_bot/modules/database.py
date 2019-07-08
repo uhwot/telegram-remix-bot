@@ -67,7 +67,7 @@ def whitelist_mngr(bot, update):
                 return
 
             try:
-                whitelisted_user = chat.get_member(entity_text)
+                whitelisted_user = chat.get_member(entity_text)["user"]
             except BadRequest:
                 message.reply_text("That user isn't in this group.")
                 return
