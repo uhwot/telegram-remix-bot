@@ -17,5 +17,5 @@ CERT_PATH = os.environ.get("CERT_PATH")
 DB_URL = os.environ.get("DB_URL")
 
 
-updater = Updater(TOKEN)
+updater = Updater(TOKEN, use_context=True)
 dispatcher = updater.dispatcher

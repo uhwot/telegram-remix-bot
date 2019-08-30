@@ -1,8 +1,8 @@
 import time
 import logging
 
-from telegram import ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import run_async, MessageHandler, Filters
+from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
@@ -13,11 +13,12 @@ watchlist = []
 
 
 @run_async
-def check(bot, update):
+def check(update: Update, context: CallbackContext):
 
     user = update.effective_user
     message = update.effective_message
     chat = update.effective_chat
+    bot = context.bot
 
     guide = "https://gitlab.com/uh_wot/telegram-remix-bot/wikis/How-to-set-a-username"
     

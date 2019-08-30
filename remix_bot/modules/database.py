@@ -1,7 +1,7 @@
 import logging
 
-from telegram.ext import MessageHandler, Filters, run_async
-from telegram import ParseMode
+from telegram.ext import CallbackContext, MessageHandler, Filters, run_async
+from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
 from .. import dispatcher
@@ -9,10 +9,11 @@ from ..utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_f
 
 
 @run_async
-def whitelist_check(bot, update):
+def whitelist_check(update: Update, context: CallbackContext):
     message = update.effective_message
     user = update.effective_user
     chat = update.effective_chat
+    bot = context.bot
 
     if not message.text.split()[0] == "#whitelist":
         return
@@ -37,10 +38,11 @@ def whitelist_check(bot, update):
 
 
 @run_async
-def whitelist_mngr(bot, update):
+def whitelist_mngr(update: Update, context: CallbackContext):
     message = update.effective_message
     user = update.effective_user
     chat = update.effective_chat
+    bot = context.bot
 
     if message.text.split()[0] not in ("#addwhitelist", "#rmwhitelist"):
         return
@@ -90,7 +92,7 @@ def whitelist_mngr(bot, update):
 
 
 @run_async
-def user_logger(bot, update):
+def user_logger(update: Update, context: CallbackContext):
     # This function inserts user IDs, usernames and names to the database to handle usernames.
     # This is due to Bot API limitations.
 

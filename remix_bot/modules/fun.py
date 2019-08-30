@@ -1,7 +1,7 @@
 import random
 
-from telegram import ParseMode
-from telegram.ext import run_async, MessageHandler, Filters
+from telegram import Update, ParseMode
+from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
 from .. import DB_URL, dispatcher
@@ -10,11 +10,12 @@ from ..slap_msgs import *
 
 
 @run_async
-def slap(bot, update):
+def slap(update: Update, context: CallbackContext):
 
     user = update.effective_user
     message = update.effective_message
     chat = update.effective_chat
+    bot = context.bot
 
     if not message.text.split()[0] == "#slap":
         return
@@ -85,7 +86,7 @@ def slap(bot, update):
 
 
 @run_async
-def runs(bot, update):
+def runs(update: Update, _):
     message = update.effective_message
     user = update.effective_user
     chat = update.effective_chat
