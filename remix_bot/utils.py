@@ -2,6 +2,7 @@ import pymongo
 import re
 
 from telegram.ext import BaseFilter
+from telegram.error import BadRequest
 
 from . import DB_URL, GROUP_ID
 from .mwt import MWT
@@ -31,6 +32,14 @@ group_id_filter = GroupIDFilter()
 def get_admin_ids(bot, chat_id):
     # Returns a list of admin IDs for a given chat. Results are cached for 1 hour.
     return [admin.user.id for admin in bot.get_chat_administrators(chat_id)]
+
+
+def delete(message):
+    # Prevents exception if message is already deleted.
+    try:
+        message.delete()
+    except BadRequest:
+        pass
 
 
 def build_menu(buttons,

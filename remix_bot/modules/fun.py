@@ -5,7 +5,7 @@ from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
 
 from .. import DB_URL, dispatcher
-from ..utils import whitelisted, get_id, get_name, group_id_filter
+from ..utils import whitelisted, get_id, get_name, group_id_filter, delete
 from ..slap_msgs import *
 
 
@@ -52,7 +52,7 @@ def slap(update: Update, context: CallbackContext):
             temp = user2.lower()
 
             if temp == "admin" or "/" in temp:
-                message.delete()
+                delete(message)
                 return
             if temp == bot.username.lower():
                 message.reply_text("Nah.")

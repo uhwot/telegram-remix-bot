@@ -5,7 +5,7 @@ from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
 from .. import dispatcher
-from ..utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_filter
+from ..utils import get_admin_ids, get_id, whitelist_db, insert_user, group_id_filter, delete
 
 
 @run_async
@@ -19,7 +19,7 @@ def whitelist_check(update: Update, context: CallbackContext):
         return
 
     if user.id not in get_admin_ids(bot, chat.id):
-        message.delete()
+        delete(message)
         return
 
     whitelist = whitelist_db[str(chat.id)]
@@ -48,7 +48,7 @@ def whitelist_mngr(update: Update, context: CallbackContext):
         return
 
     if user.id not in get_admin_ids(bot, chat.id):
-        message.delete()
+        delete(message)
         return
 
     try:

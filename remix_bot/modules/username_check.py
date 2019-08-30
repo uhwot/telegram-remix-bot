@@ -3,11 +3,10 @@ import logging
 
 from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
-from telegram.error import BadRequest
 from telegram.utils.helpers import escape_markdown
 
 from .. import dispatcher
-from ..utils import get_admin_ids, build_menu, whitelisted, group_id_filter
+from ..utils import get_admin_ids, build_menu, whitelisted, group_id_filter, delete
 
 watchlist = []
 
@@ -37,7 +36,7 @@ def check(update: Update, context: CallbackContext):
         return
 
     if user.id in watchlist:
-        message.delete()
+        delete(message)
         logging.info("Deleted message from " + user.full_name)
         return
 
@@ -48,17 +47,14 @@ def check(update: Update, context: CallbackContext):
     button = [InlineKeyboardButton("How to set a username", url=guide)]
     reply_markup = InlineKeyboardMarkup(build_menu(button, n_cols=1))
 
-    msg_id = chat.send_message(temp, ParseMode.MARKDOWN, reply_markup=reply_markup)["message_id"]
+    temp_msg = chat.send_message(temp, ParseMode.MARKDOWN, reply_markup=reply_markup)
 
     if not message.new_chat_members:
-        try:
-            message.delete()
-        except BadRequest:
-            pass
+        delete(message)
 
     time.sleep(120)
 
-    bot.delete_message(chat.id, msg_id)
+    delete(temp_msg)
 
     if not chat.get_member(user.id)["user"]["username"] \
     and chat.get_member(user.id)["status"] not in ("left", "kicked"):
@@ -66,9 +62,9 @@ def check(update: Update, context: CallbackContext):
         chat.unban_member(user.id)  # unban on user = kick
         watchlist.remove(user.id)
         logging.info(user.full_name + " has been kicked.")
-        msg_id = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")["message_id"]
+        temp_msg = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")
         time.sleep(120)
-        bot.delete_message(chat.id, msg_id)
+        delete(temp_msg)
 
     else:
         watchlist.remove(user.id)
