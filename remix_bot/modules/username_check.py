@@ -43,7 +43,7 @@ def check(update: Update, context: CallbackContext):
     logging.info(user.full_name + " has no username. Waiting...")
     watchlist.append(user.id)
 
-    temp = escape_markdown(user.full_name) + ", get a username in 2 minutes or you will be kicked."
+    temp = escape_markdown(user.full_name) + ", set a username in 2 minutes or you will be kicked."
     button = [InlineKeyboardButton("How to set a username", url=guide)]
     reply_markup = InlineKeyboardMarkup(build_menu(button, n_cols=1))
 
