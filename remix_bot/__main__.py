@@ -1,7 +1,9 @@
 import logging
+from importlib import import_module
 
 from . import updater
 from . import TOKEN, URL, PORT, CERT_PATH, DB_URL
+from .modules import ALL_MODULES
 
 if URL:
     updater.start_webhook(listen="0.0.0.0",
@@ -19,14 +21,18 @@ if URL:
 else:
     logging.info("Webhooks disabled, using long polling instead.")
 
-import remix_bot.modules.username_check
-import remix_bot.modules.fun
-if DB_URL:
-    logging.info("Database enabled.")
-    import remix_bot.modules.database
-else:
+disabled_modules = []
+if not DB_URL:
     logging.info("Database disabled.")
+    disabled_modules.append("database")
+else:
+    logging.info("Database enabled.")
 
+for module in disabled_modules:
+    ALL_MODULES.remove(module)
+
+for module in ALL_MODULES:
+    import_module("remix_bot.modules." + module)
 
 if not URL:
     updater.start_polling()
