@@ -1,9 +1,8 @@
 import time
 import logging
 
-from telegram import Update, ParseMode, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
-from telegram.utils.helpers import escape_markdown
 
 from .. import dispatcher
 from ..utils import get_admin_ids, build_menu, whitelisted, group_id_filter, delete
@@ -43,11 +42,11 @@ def check(update: Update, context: CallbackContext):
     logging.info(user.full_name + " has no username. Waiting...")
     watchlist.append(user.id)
 
-    temp = escape_markdown(user.full_name) + ", set a username in 2 minutes or you will be kicked."
+    temp = user.full_name + ", set a username in 2 minutes or you will be kicked."
     button = [InlineKeyboardButton("How to set a username", url=guide)]
     reply_markup = InlineKeyboardMarkup(build_menu(button, n_cols=1))
 
-    temp_msg = chat.send_message(temp, ParseMode.MARKDOWN, reply_markup=reply_markup)
+    temp_msg = chat.send_message(temp, reply_markup=reply_markup)
 
     if not message.new_chat_members:
         delete(message)
@@ -62,7 +61,7 @@ def check(update: Update, context: CallbackContext):
         chat.unban_member(user.id)  # unban on user = kick
         watchlist.remove(user.id)
         logging.info(user.full_name + " has been kicked.")
-        temp_msg = chat.send_message(escape_markdown(user.full_name) + " has been kicked.")
+        temp_msg = chat.send_message(user.full_name + " has been kicked.")
         time.sleep(120)
         delete(temp_msg)
 
