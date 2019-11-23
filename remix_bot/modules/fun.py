@@ -23,7 +23,7 @@ def slap(update: Update, context: CallbackContext):
     if not user.username and not whitelisted(user.id, chat.id):
         return
 
-    user1 = "[{}](tg://user?id={})".format(user.full_name, user.id)
+    user1 = f"[{user.full_name}](tg://user?id={user.id})"
     user2 = None
     self = False
     basic = False
@@ -37,8 +37,7 @@ def slap(update: Update, context: CallbackContext):
         if user.id == message.reply_to_message.from_user.id:
             self = True
         else:
-            user2 = "[{}](tg://user?id={})".format(message.reply_to_message.from_user.full_name,
-                                                   message.reply_to_message.from_user.id)
+            user2 = f"[{message.reply_to_message.from_user.full_name}](tg://user?id={message.reply_to_message.from_user.id})"
 
         reply_msg = message.reply_to_message.message_id
     else:
@@ -63,7 +62,7 @@ def slap(update: Update, context: CallbackContext):
 
                 if DB_URL:
                     try:
-                        user2 = "[{}](tg://user?id={})".format(get_name(user2), get_id(user2))
+                        user2 = f"[{get_name(user2)}](tg://user?id={get_id(user2)})"
                     except KeyError:
                         user2 = "@" + escape_markdown(user2)
                 else:

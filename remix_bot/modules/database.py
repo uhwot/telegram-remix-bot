@@ -32,7 +32,7 @@ def whitelist_check(update: Update, context: CallbackContext):
 
     for id in ids:
         curr_user = chat.get_member(id)["user"]
-        msg = msg + "\n[{}](tg://user?id={}): {}".format(curr_user.full_name, id, id)
+        msg = msg + f"\n[{curr_user.full_name}](tg://user?id={id}): {id}"
 
     message.reply_text(msg, ParseMode.MARKDOWN)
 
@@ -83,12 +83,12 @@ def whitelist_mngr(update: Update, context: CallbackContext):
 
     if message.text.split()[0] == "#addwhitelist":
         whitelist.replace_one(user_dict, user_dict, True)
-        message.reply_text("Added " + whitelisted_user.full_name + " to the whitelist!")
-        logging.info(user.full_name + " added " + whitelisted_user.full_name + " to the whitelist!")
+        message.reply_text(f"Added {whitelisted_user.full_name} to the whitelist!")
+        logging.info(f"{user.full_name} added {whitelisted_user.full_name} to the whitelist!")
     else:
         whitelist.delete_one(user_dict)
-        message.reply_text("Removed " + whitelisted_user.full_name + " from the whitelist!")
-        logging.info(user.full_name + " removed " + whitelisted_user.full_name + " from the whitelist!")
+        message.reply_text(f"Removed {whitelisted_user.full_name} from the whitelist!")
+        logging.info(f"{user.full_name} removed {whitelisted_user.full_name} from the whitelist!")
 
 
 @run_async
