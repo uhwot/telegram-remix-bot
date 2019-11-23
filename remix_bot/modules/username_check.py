@@ -72,4 +72,4 @@ def check(update: Update, context: CallbackContext):
 
 check_handler = MessageHandler(group_id_filter & Filters.group, check)
 
-dispatcher.add_handler(check_handler)
+dispatcher.add_handler(check_handler, 1)

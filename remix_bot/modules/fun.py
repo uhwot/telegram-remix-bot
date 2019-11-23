@@ -17,9 +17,6 @@ def slap(update: Update, context: CallbackContext):
     chat = update.effective_chat
     bot = context.bot
 
-    if not message.text.split()[0] == "#slap":
-        return
-
     if not user.username and not whitelisted(user.id, chat.id):
         return
 
@@ -90,17 +87,14 @@ def runs(update: Update, _):
     user = update.effective_user
     chat = update.effective_chat
 
-    if not message.text.split()[0] == "#runs":
-        return
-
     if not user.username and not whitelisted(user.id, chat.id):
         return
 
     message.reply_text(random.choice(RUN_STRINGS))
 
 
-slap_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, slap)
-runs_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, runs)
+slap_handler = MessageHandler(Filters.regex(r"^#slap") & group_id_filter & Filters.group & Filters.text, slap)
+runs_handler = MessageHandler(Filters.regex(r"^#runs") & group_id_filter & Filters.group & Filters.text, runs)
 
-dispatcher.add_handler(slap_handler, 1)
-dispatcher.add_handler(runs_handler, 2)
+dispatcher.add_handler(slap_handler)
+dispatcher.add_handler(runs_handler)

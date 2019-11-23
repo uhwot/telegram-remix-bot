@@ -15,9 +15,6 @@ def whitelist_check(update: Update, context: CallbackContext):
     chat = update.effective_chat
     bot = context.bot
 
-    if not message.text.split()[0] == "#whitelist":
-        return
-
     if user.id not in get_admin_ids(bot, chat.id):
         delete(message)
         return
@@ -43,9 +40,6 @@ def whitelist_mngr(update: Update, context: CallbackContext):
     user = update.effective_user
     chat = update.effective_chat
     bot = context.bot
-
-    if message.text.split()[0] not in ("#addwhitelist", "#rmwhitelist"):
-        return
 
     if user.id not in get_admin_ids(bot, chat.id):
         delete(message)
@@ -113,10 +107,10 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-whitelistmngr_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, whitelist_mngr)
-whitelist_handler = MessageHandler(group_id_filter & Filters.group & Filters.text, whitelist_check)
+whitelistmngr_handler = MessageHandler(Filters.regex(r"^#(add|rm)whitelist") & group_id_filter & Filters.group & Filters.text, whitelist_mngr)
+whitelist_handler = MessageHandler(Filters.regex(r"^#whitelist") & group_id_filter & Filters.group & Filters.text, whitelist_check)
 userlogger_handler = MessageHandler(group_id_filter & Filters.group, user_logger)
 
-dispatcher.add_handler(userlogger_handler, 3)
-dispatcher.add_handler(whitelistmngr_handler, 4)
-dispatcher.add_handler(whitelist_handler, 5)
+dispatcher.add_handler(userlogger_handler, 2)
+dispatcher.add_handler(whitelistmngr_handler)
+dispatcher.add_handler(whitelist_handler)
