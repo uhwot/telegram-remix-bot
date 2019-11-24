@@ -107,8 +107,8 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-whitelistmngr_handler = MessageHandler(Filters.regex(r"^#(add|rm)whitelist") & group_id_filter & Filters.group & Filters.text, whitelist_mngr)
-whitelist_handler = MessageHandler(Filters.regex(r"^#whitelist") & group_id_filter & Filters.group & Filters.text, whitelist_check)
+whitelistmngr_handler = MessageHandler(Filters.regex(r"^#(add|rm)whitelist(\s|$)") & group_id_filter & Filters.group & Filters.text, whitelist_mngr)
+whitelist_handler = MessageHandler(Filters.regex(r"^#whitelist(\s|$)") & group_id_filter & Filters.group & Filters.text, whitelist_check)
 userlogger_handler = MessageHandler(group_id_filter & Filters.group, user_logger)
 
 dispatcher.add_handler(userlogger_handler, 2)
