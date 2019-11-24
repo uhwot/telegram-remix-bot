@@ -11,6 +11,9 @@ TOKEN = os.environ.get("TOKEN")
 GROUP_ID = os.environ.get("GROUP_ID")
 if GROUP_ID:
     GROUP_ID = GROUP_ID.split()
+OWNER_ID = os.environ.get("OWNER_ID")
+if OWNER_ID:
+    OWNER_ID = int(OWNER_ID)
 # webhooks
 URL = os.environ.get("URL")
 PORT = os.environ.get("PORT")

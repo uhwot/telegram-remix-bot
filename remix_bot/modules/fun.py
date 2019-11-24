@@ -3,6 +3,7 @@ import random
 from telegram import Update, ParseMode
 from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 from telegram.utils.helpers import escape_markdown
+from telegram.error import BadRequest
 
 from .. import DB_URL, dispatcher, OWNER_ID, GROUP_ID
 from ..utils import whitelisted, get_id, get_name, group_id_filter, delete
@@ -93,8 +94,60 @@ def runs(update: Update, _):
     message.reply_text(random.choice(RUN_STRINGS))
 
 
+@run_async
+def send(update: Update, context: CallbackContext):
+    user = update.effective_user
+    message = update.effective_message
+    chat = update.effective_chat
+    bot = context.bot
+
+    split = message.text.split()
+
+    if not OWNER_ID:
+        return
+
+    if OWNER_ID != user.id:
+        return
+
+    if split[0] == "#send":
+        try:
+            chat_ids = [int(split[1])]
+        except ValueError:
+            message.reply_text("Invalid chat ID.")
+            return
+        except IndexError:
+            message.reply_text("Please specify a chat ID.")
+            return
+    elif GROUP_ID:
+        chat_ids = GROUP_ID
+    else:
+        message.reply_text("Env variable GROUP_ID not specified.")
+        return
+
+    if split[0] == "#send":
+        split_num = 2
+    else:
+        split_num = 1
+
+    try:
+        text = message.text.split(" ", split_num)[split_num]
+    except IndexError:
+        message.reply_text("Please specify some text.")
+        return
+
+    try:
+        for id in chat_ids:
+            bot.send_message(id, text)
+    except BadRequest:
+        message.reply_text("Couldn't send all messages.")
+    else:
+        message.reply_text("Messages sent!")
+
+
 slap_handler = MessageHandler(Filters.regex(r"^#slap(\s|$)") & group_id_filter & Filters.group & Filters.text, slap)
 runs_handler = MessageHandler(Filters.regex(r"^#runs(\s|$)") & group_id_filter & Filters.group & Filters.text, runs)
+send_handler = MessageHandler(Filters.regex(r"^#send(all|\s|$)") & Filters.private & Filters.text, send)
 
 dispatcher.add_handler(slap_handler)
 dispatcher.add_handler(runs_handler)
+dispatcher.add_handler(send_handler)
