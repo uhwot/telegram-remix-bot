@@ -46,30 +46,42 @@ def whitelist_mngr(update: Update, context: CallbackContext):
         return
 
     try:
-        whitelisted_user = message.entities[1]["user"]
+        message.text.split()[1]
     except IndexError:
-        message.reply_text("Mention a user to use this command.")
+        message.reply_text("Mention a user or specify a user ID to use this command.")
         return
 
-    if not whitelisted_user:
+    whitelisted_user = message.parse_entities("text_mention").keys()
+
+    if len(whitelisted_user) != 0:
+        whitelisted_user = next(iter(whitelisted_user))["user"]
+    else:
+        if message.text.split()[1][0] == "@":
+            message.reply_text("Invalid username.")
+            return
+
+        try:
+            id = int(message.text.split()[1])
+            whitelisted_user = chat.get_member(id)["user"]
+        except BadRequest:
+            message.reply_text("That user isn't in this chat.")
+            return
+        except ValueError:
+            message.reply_text("Invalid user ID.")
+            return
+
+    if not whitelisted_user:  # user has username
 
         entity_text = message.parse_entity(message.entities[1])
 
         try:
             whitelisted_user = chat.get_member(get_id(entity_text[1:]))["user"]
         except KeyError:
-            if entity_text.startswith("@"):
-                message.reply_text("That username isn't in the database. Try again with a user ID.")
-                return
-
-            try:
-                whitelisted_user = chat.get_member(entity_text)["user"]
-            except BadRequest:
-                message.reply_text("That user isn't in this group.")
-                return
+            message.reply_text("That username isn't in the database. Try again with a user ID.")
+            return
 
         except BadRequest:
-            message.reply_text("That user isn't in this group.")
+            message.reply_text("That user isn't in this chat.")
             return
 
     whitelist = whitelist_db[str(chat.id)]
