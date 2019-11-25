@@ -12,6 +12,8 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `GROUP_ID` (optional): The ID of the group where the bot should run. You can also specify multiple IDs by separating them with spaces. If not set, the bot will work in all groups.
 
+- `OWNER_ID` (optional): The ID of the bot owner. Required for `#send` and `#sendall`.
+
 - `URL` (webhooks): The URL your webhook should connect to. If not set, the bot will use long polling instead.
 
 - `PORT` (webhooks): Port to use for your webhooks.
