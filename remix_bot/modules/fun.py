@@ -145,7 +145,7 @@ def send(update: Update, context: CallbackContext):
 
 slap_handler = MessageHandler(Filters.regex(r"^#slap(\s|$)") & group_id_filter & Filters.group & Filters.text, slap)
 runs_handler = MessageHandler(Filters.regex(r"^#runs(\s|$)") & group_id_filter & Filters.group & Filters.text, runs)
-send_handler = MessageHandler(Filters.regex(r"^#send(all|\s|$)") & Filters.private & Filters.text, send)
+send_handler = MessageHandler(Filters.regex(r"^#send(all)?(\s|$)") & Filters.private & Filters.text, send)
 
 dispatcher.add_handler(slap_handler)
 dispatcher.add_handler(runs_handler)
