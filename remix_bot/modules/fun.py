@@ -98,7 +98,6 @@ def runs(update: Update, _):
 def send(update: Update, context: CallbackContext):
     user = update.effective_user
     message = update.effective_message
-    chat = update.effective_chat
     bot = context.bot
 
     split = message.text.split()
