@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+pylint = "*"
+
+[packages]
+python-telegram-bot = ">=12.2.0"
+pymongo = ">=3.9.0"
+dnspython = ">=1.16.0"
+ujson = ">=1.35"
+
+[requires]
+python_version = "3.8"
