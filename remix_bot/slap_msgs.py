@@ -38,7 +38,7 @@ ITEMS = (
     "baseball bat",
     "cricket bat",
     "wooden cane",
-    "nail",
+    "dildo",
     "printer",
     "shovel",
     "CRT monitor",
