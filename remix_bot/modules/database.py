@@ -1,6 +1,6 @@
 import logging
 
-from telegram.ext import CallbackContext, MessageHandler, Filters, run_async
+from telegram.ext import CallbackContext, PrefixHandler, MessageHandler, Filters, run_async
 from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
@@ -40,13 +40,14 @@ def whitelist_mngr(update: Update, context: CallbackContext):
     user = update.effective_user
     chat = update.effective_chat
     bot = context.bot
+    args = context.args
 
     if user.id not in get_admin_ids(bot, chat.id):
         delete(message)
         return
 
     try:
-        message.text.split()[1]
+        args[0]
     except IndexError:
         message.reply_text("Mention a user or specify a user ID to use this command.")
         return
@@ -56,12 +57,12 @@ def whitelist_mngr(update: Update, context: CallbackContext):
     if len(whitelisted_user) != 0:
         whitelisted_user = next(iter(whitelisted_user))["user"]
     else:
-        if message.text.split()[1][0] == "@":
+        if args[0][0] == "@":
             message.reply_text("Invalid username.")
             return
 
         try:
-            id = int(message.text.split()[1])
+            id = int(args[0])
             whitelisted_user = chat.get_member(id)["user"]
         except BadRequest:
             message.reply_text("That user isn't in this chat.")
@@ -119,8 +120,8 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-whitelistmngr_handler = MessageHandler(Filters.regex(r"^#(add|rm)whitelist(\s|$)") & group_id_filter & Filters.group & Filters.text, whitelist_mngr)
-whitelist_handler = MessageHandler(Filters.regex(r"^#whitelist(\s|$)") & group_id_filter & Filters.group & Filters.text, whitelist_check)
+whitelistmngr_handler = PrefixHandler("#", ["addwhitelist", "rmwhitelist"], whitelist_mngr, group_id_filter & Filters.group, True)
+whitelist_handler = PrefixHandler("#", "whitelist", whitelist_check, group_id_filter & Filters.group)
 userlogger_handler = MessageHandler(group_id_filter & Filters.group, user_logger)
 
 dispatcher.add_handler(userlogger_handler, 2)

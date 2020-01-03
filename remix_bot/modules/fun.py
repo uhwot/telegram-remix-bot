@@ -1,7 +1,7 @@
 import random
 
 from telegram import Update, ParseMode
-from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
+from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest
 
@@ -12,7 +12,6 @@ from ..slap_msgs import *
 
 @run_async
 def slap(update: Update, context: CallbackContext):
-
     user = update.effective_user
     message = update.effective_message
     chat = update.effective_chat
@@ -99,6 +98,7 @@ def send(update: Update, context: CallbackContext):
     user = update.effective_user
     message = update.effective_message
     bot = context.bot
+    args = context.args
 
     split = message.text.split()
 
@@ -110,7 +110,7 @@ def send(update: Update, context: CallbackContext):
 
     if split[0] == "#send":
         try:
-            chat_ids = [int(split[1])]
+            chat_ids = [int(args[0])]
         except ValueError:
             message.reply_text("Invalid chat ID.")
             return
@@ -143,9 +143,9 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Messages sent!")
 
 
-slap_handler = MessageHandler(Filters.regex(r"^#slap(\s|$)") & group_id_filter & Filters.group & Filters.text, slap)
-runs_handler = MessageHandler(Filters.regex(r"^#runs(\s|$)") & group_id_filter & Filters.group & Filters.text, runs)
-send_handler = MessageHandler(Filters.regex(r"^#send(all)?(\s|$)") & Filters.private & Filters.text, send)
+slap_handler = PrefixHandler("#", "slap", slap, group_id_filter & Filters.group, True)
+runs_handler = PrefixHandler("#", "runs", runs, group_id_filter & Filters.group)
+send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private, True)
 
 dispatcher.add_handler(slap_handler)
 dispatcher.add_handler(runs_handler)
