@@ -3,7 +3,7 @@ import random
 from telegram import Update, ParseMode
 from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
 from telegram.utils.helpers import escape_markdown
-from telegram.error import BadRequest
+from telegram.error import BadRequest, Unauthorized
 
 from .. import DB_URL, dispatcher, OWNER_ID, GROUP_ID
 from ..utils import whitelisted, get_id, get_name, group_id_filter, delete
@@ -139,6 +139,8 @@ def send(update: Update, context: CallbackContext):
             bot.send_message(id, text)
     except BadRequest:
         message.reply_text("Couldn't send all messages.")
+    except Unauthorized:
+        message.reply_text("Request unauthorized. Are you trying to send a message to a bot?")
     else:
         message.reply_text("Messages sent!")
 
