@@ -84,9 +84,7 @@ def slap(update: Update, context: CallbackContext):
 @group_id
 @username
 def runs(update: Update, _):
-    message = update.effective_message
-
-    message.reply_text(random.choice(RUN_STRINGS))
+    update.effective_message.reply_text(random.choice(RUN_STRINGS))
 
 
 @run_async
