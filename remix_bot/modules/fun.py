@@ -96,9 +96,9 @@ def send(update: Update, context: CallbackContext):
     bot = context.bot
     args = context.args
 
-    split = message.text.split()
+    cmd = message.text.split()[0]
 
-    if split[0] == "#send":
+    if cmd == "#send":
         try:
             chat_ids = [int(args[0])]
         except ValueError:
@@ -113,7 +113,7 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Env variable GROUP_ID not specified.")
         return
 
-    if split[0] == "#send":
+    if cmd == "#send":
         split_num = 2
     else:
         split_num = 1
