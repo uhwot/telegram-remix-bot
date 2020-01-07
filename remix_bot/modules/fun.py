@@ -6,19 +6,18 @@ from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest, Unauthorized
 
 from .. import DB_URL, dispatcher, OWNER_ID, GROUP_ID
-from ..utils import whitelisted, get_id, get_name, group_id_filter, delete
+from ..utils import get_id, get_name, group_id, delete, username, owner
 from ..slap_msgs import *
 
 
 @run_async
+@group_id
+@username
 def slap(update: Update, context: CallbackContext):
     user = update.effective_user
     message = update.effective_message
     chat = update.effective_chat
     bot = context.bot
-
-    if not user.username and not whitelisted(user.id, chat.id):
-        return
 
     user1 = f"[{user.full_name}](tg://user?id={user.id})"
     user2 = None
@@ -82,31 +81,22 @@ def slap(update: Update, context: CallbackContext):
 
 
 @run_async
+@group_id
+@username
 def runs(update: Update, _):
     message = update.effective_message
-    user = update.effective_user
-    chat = update.effective_chat
-
-    if not user.username and not whitelisted(user.id, chat.id):
-        return
 
     message.reply_text(random.choice(RUN_STRINGS))
 
 
 @run_async
+@owner
 def send(update: Update, context: CallbackContext):
-    user = update.effective_user
     message = update.effective_message
     bot = context.bot
     args = context.args
 
     split = message.text.split()
-
-    if not OWNER_ID:
-        return
-
-    if OWNER_ID != user.id:
-        return
 
     if split[0] == "#send":
         try:
@@ -145,8 +135,8 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Messages sent!")
 
 
-slap_handler = PrefixHandler("#", "slap", slap, group_id_filter & Filters.group, True)
-runs_handler = PrefixHandler("#", "runs", runs, group_id_filter & Filters.group)
+slap_handler = PrefixHandler("#", "slap", slap, Filters.group, True)
+runs_handler = PrefixHandler("#", "runs", runs, Filters.group)
 send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private, True)
 
 dispatcher.add_handler(slap_handler)

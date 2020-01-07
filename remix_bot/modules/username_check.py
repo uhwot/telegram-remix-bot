@@ -5,14 +5,14 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 
 from .. import dispatcher
-from ..utils import get_admin_ids, build_menu, whitelisted, group_id_filter, delete
+from ..utils import get_admin_ids, build_menu, whitelisted, group_id, delete
 
 watchlist = []
 
 
 @run_async
+@group_id
 def check(update: Update, context: CallbackContext):
-
     user = update.effective_user
     message = update.effective_message
     chat = update.effective_chat
@@ -70,6 +70,6 @@ def check(update: Update, context: CallbackContext):
         logging.info(f"{user.full_name} now has a username or has left.")
 
 
-check_handler = MessageHandler(group_id_filter & Filters.group, check)
+check_handler = MessageHandler(Filters.group, check)
 
 dispatcher.add_handler(check_handler, 1)

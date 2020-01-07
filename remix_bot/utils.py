@@ -1,10 +1,11 @@
 import pymongo
 import re
 
-from telegram.ext import BaseFilter
+from telegram import Update
+from telegram.ext import BaseFilter, CallbackContext
 from telegram.error import BadRequest
 
-from . import DB_URL, GROUP_ID
+from . import DB_URL, GROUP_ID, OWNER_ID
 from .mwt import MWT
 
 db_client = pymongo.MongoClient(DB_URL)
@@ -12,20 +13,6 @@ whitelist_db = db_client["whitelist"]
 
 global_db = db_client["global"]
 userlog = global_db["users"]
-
-
-class GroupIDFilter(BaseFilter):
-    def filter(self, message):
-        if not GROUP_ID:
-            return True
-
-        if str(message.chat_id) in GROUP_ID:
-            return True
-        else:
-            return False
-
-
-group_id_filter = GroupIDFilter()
 
 
 @MWT(timeout=3600)
@@ -82,3 +69,43 @@ def whitelisted(user_id, chat_id):
         return True
     else:
         return False
+
+# Decorators
+
+def group_id(func):
+    def wrapper(update: Update, *args, **kwargs):
+        if not GROUP_ID:
+            func(update, *args, **kwargs)
+
+        if str(update.effective_chat.id) in GROUP_ID:
+            func(update, *args, **kwargs)
+    return wrapper
+
+
+def username(func):
+    def wrapper(update: Update, *args, **kwargs):
+        username = update.effective_user.username
+        user_id = update.effective_user.id
+        chat_id = update.effective_chat.id
+
+        if username or whitelisted(user_id, chat_id):
+            func(update, *args, **kwargs)
+    return wrapper
+
+
+def admin(func):
+    def wrapper(update: Update, context: CallbackContext, *args, **kwargs):
+        chat_id = update.effective_chat.id
+        user_id = update.effective_user.id
+        bot = context.bot
+
+        if user_id in get_admin_ids(bot, chat_id):
+            func(update, context, *args, **kwargs)
+    return wrapper
+
+
+def owner(func):
+    def wrapper(update: Update, *args, **kwargs):
+        if OWNER_ID and OWNER_ID == update.effective_user.id:
+            func(update, *args, **kwargs)
+    return wrapper
