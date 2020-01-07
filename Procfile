@@ -1,1 +1,1 @@
-worker: python3 -m remix_bot
+web: python3 -m remix_bot
