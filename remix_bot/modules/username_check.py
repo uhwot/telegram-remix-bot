@@ -1,6 +1,6 @@
-import time
 import logging
 
+from time import sleep
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import CallbackContext, run_async, MessageHandler, Filters
 
@@ -51,7 +51,7 @@ def check(update: Update, context: CallbackContext):
     if not message.new_chat_members:
         delete(message)
 
-    time.sleep(120)
+    sleep(120)
 
     delete(temp_msg)
 
@@ -62,7 +62,7 @@ def check(update: Update, context: CallbackContext):
         watchlist.remove(user.id)
         logging.info(f"{user.full_name} has been kicked.")
         temp_msg = chat.send_message(f"{user.full_name} has been kicked.")
-        time.sleep(120)
+        sleep(120)
         delete(temp_msg)
 
     else:
