@@ -39,4 +39,3 @@ if not URL:
 
 logging.info("Started.")
 updater.idle()
-
