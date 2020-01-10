@@ -133,9 +133,9 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Messages sent!")
 
 
-slap_handler = PrefixHandler("#", "slap", slap, Filters.group, True)
+slap_handler = PrefixHandler("#", "slap", slap, Filters.group)
 runs_handler = PrefixHandler("#", "runs", runs, Filters.group)
-send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private, True)
+send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private)
 
 dispatcher.add_handler(slap_handler)
 dispatcher.add_handler(runs_handler)
