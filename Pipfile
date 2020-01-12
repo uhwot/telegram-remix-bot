@@ -7,7 +7,7 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-python-telegram-bot = ">=12.2.0"
+python-telegram-bot = ">=12.3.0"
 pymongo = ">=3.10.1"
 dnspython = ">=1.16.0"
 ujson = ">=1.35"
