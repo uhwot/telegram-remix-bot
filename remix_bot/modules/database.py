@@ -25,7 +25,7 @@ def whitelist_check(update: Update, context: CallbackContext):
 
     for id in ids:
         curr_user = chat.get_member(id)["user"]
-        msg = msg + f"\n[{curr_user.full_name}](tg://user?id={id}): {id}"
+        msg = msg + f"\n• [{curr_user.full_name}](tg://user?id={id}): {id}"
 
     message.reply_text(msg, ParseMode.MARKDOWN)
 
