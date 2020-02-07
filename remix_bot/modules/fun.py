@@ -6,7 +6,7 @@ from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest, Unauthorized
 
 from .. import DB_URL, dispatcher, OWNER_ID, GROUP_ID
-from ..utils import get_id, get_name, group_id, delete, username, owner
+from ..utils import get_id, get_name, group_id, delete, username, owner, add_help
 from ..slap_msgs import *
 
 
@@ -140,3 +140,7 @@ send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private)
 dispatcher.add_handler(slap_handler)
 dispatcher.add_handler(runs_handler)
 dispatcher.add_handler(send_handler)
+
+add_help("slap", "Slaps a user.")
+add_help("runs", "Why are you running?")
+add_help("send/sendall", "Sends a message to specified groups or users.", owner_only=True)

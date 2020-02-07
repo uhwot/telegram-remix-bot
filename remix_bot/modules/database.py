@@ -5,7 +5,7 @@ from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
 from .. import dispatcher
-from ..utils import get_id, whitelist_db, insert_user, delete, group_id, admin
+from ..utils import get_id, whitelist_db, insert_user, delete, group_id, admin, add_help
 
 
 @run_async
@@ -121,3 +121,6 @@ userlogger_handler = MessageHandler(Filters.group, user_logger)
 dispatcher.add_handler(userlogger_handler, 2)
 dispatcher.add_handler(whitelistmngr_handler)
 dispatcher.add_handler(whitelist_handler)
+
+add_help("whitelist", "Shows a list of users in the whitelist and their IDs.", True)
+add_help("addwhitelist/rmwhitelist", "Adds or removes a user from the whitelist.", True)

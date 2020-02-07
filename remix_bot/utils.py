@@ -70,8 +70,22 @@ def whitelisted(user_id, chat_id):
     else:
         return False
 
-# Decorators
+cmds = {}
 
+def add_help(cmd, desc, admin_only=False, owner_only=False):
+    cmd_list = cmd.split("/")
+    for index, cmd in enumerate(cmd_list):
+        cmd_list[index] = f"#{cmd}"
+    cmd = "/".join(cmd_list)
+    
+    if admin_only:
+        cmd += " (admin only)"
+    if owner_only:
+        cmd += " (owner only)"
+    
+    cmds[cmd] = desc
+
+# Decorators
 def group_id(func):
     def wrapper(update: Update, *args, **kwargs):
         if not GROUP_ID:
