@@ -1,4 +1,4 @@
-from telegram import Update, ParseMode
+from telegram import Update
 from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
 
 from .. import dispatcher
@@ -15,7 +15,7 @@ def help(update: Update, context: CallbackContext):
     for cmd, desc in utils.cmds.items():
         msg += f"• {cmd}: {desc}\n"
     
-    message.reply_text(msg, ParseMode.MARKDOWN)
+    message.reply_text(msg)
 
 
 help_handler = PrefixHandler("#", "help", help, Filters.group)
