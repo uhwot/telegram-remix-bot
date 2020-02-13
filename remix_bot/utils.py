@@ -77,7 +77,7 @@ def add_help(cmd, desc, admin_only=False, owner_only=False):
     for index, cmd in enumerate(cmd_list):
         cmd_list[index] = f"#{cmd}"
     cmd = "/".join(cmd_list)
-    
+
     if admin_only:
         cmd += " (admin only)"
     if owner_only:
