@@ -35,4 +35,4 @@ class MWT(object):
             return v[0]
         func.func_name = f.__name__
 
-        return func 
+        return func

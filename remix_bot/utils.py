@@ -82,7 +82,7 @@ def add_help(cmd, desc, admin_only=False, owner_only=False):
         cmd += " (admin only)"
     if owner_only:
         cmd += " (owner only)"
-    
+
     cmds[cmd] = desc
 
 # Decorators

@@ -77,7 +77,7 @@ HIT = (
     "slaps",
     "smacks",
     "bashes"
-) 
+)
 
 RUN_STRINGS = (
     "Where do you think you're going?",

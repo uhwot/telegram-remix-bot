@@ -15,7 +15,7 @@ def help(update: Update, context: CallbackContext):
     msg = ""
     for cmd, desc in utils.cmds.items():
         msg += f"• {cmd}: {desc}\n"
-    
+
     message.reply_text(msg)
 
 
