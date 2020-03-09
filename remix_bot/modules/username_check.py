@@ -55,8 +55,9 @@ def check(update: Update, context: CallbackContext):
 
     delete(temp_msg)
 
-    if not chat.get_member(user.id)["user"]["username"] \
-    and chat.get_member(user.id)["status"] not in ("left", "kicked"):
+    if not chat.get_member(user.id)["user"]["username"] and chat.get_member(user.id)[
+        "status"
+    ] not in ("left", "kicked"):
 
         chat.unban_member(user.id)  # unban on user = kick
         watchlist.remove(user.id)

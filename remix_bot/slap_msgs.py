@@ -11,7 +11,7 @@ SLAP_TEMPLATES = (
     "{user1} ties {user2} to a chair and {throws} a {item} at them.",
     "{user1} gave a friendly push to help {user2} learn to swim in lava.",
     "{user1} {hits} {user2} with a diamond sword.",
-    "{user1} used Splash! But nothing happened..."
+    "{user1} used Splash! But nothing happened...",
 )
 
 SLAP_SELF = (
@@ -21,7 +21,7 @@ SLAP_SELF = (
     "{user1} hits their head against a wall... for some reason.",
     "{user1} launches themselves into space without a spacesuit... because they thought there was oxygen.",
     "{user1} {hits} themselves with a {item} after looking at Windows 8's UI. They lost all hope of humanity.",
-    "{user1} is confused. They hurt themselves in their confusion."
+    "{user1} is confused. They hurt themselves in their confusion.",
 )
 
 SLAP_BASIC = (
@@ -29,7 +29,7 @@ SLAP_BASIC = (
     "{user1} fell from a high place.",
     "{user1} suffocated in a wall.",
     "{user1} was struck by lightning.",
-    "{user1} was squished by a falling anvil."
+    "{user1} was squished by a falling anvil.",
 )
 
 ITEMS = (
@@ -61,23 +61,12 @@ ITEMS = (
     "beehive",
     "piece of rotten meat",
     "bear",
-    "ton of bricks"
+    "ton of bricks",
 )
 
-THROW = (
-    "throws",
-    "flings",
-    "chucks",
-    "hurls"
-)
+THROW = ("throws", "flings", "chucks", "hurls")
 
-HIT = (
-    "hits",
-    "whacks",
-    "slaps",
-    "smacks",
-    "bashes"
-)
+HIT = ("hits", "whacks", "slaps", "smacks", "bashes")
 
 RUN_STRINGS = (
     "Where do you think you're going?",
@@ -105,7 +94,7 @@ RUN_STRINGS = (
     "May the odds be ever in your favour.",
     "Famous last words.",
     "And they disappeared forever, never to be seen again.",
-    "\"Oh, look at me! I'm so cool, I can run from a bot!\" - this person",
+    '"Oh, look at me! I\'m so cool, I can run from a bot!" - this person',
     "Yeah yeah, just tap /kickme already.",
     "Here, take this ring and head to Mordor while you're at it.",
     "Legend has it, they're still running...",
@@ -128,5 +117,5 @@ RUN_STRINGS = (
     "Hey, look at them! They're running from the inevitable banhammer... Cute.",
     "Han shot first. So will I.",
     "What are you running after, a white rabbit?",
-    "As The Doctor would say... RUN!"
+    "As The Doctor would say... RUN!",
 )

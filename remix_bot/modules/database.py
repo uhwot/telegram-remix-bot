@@ -1,6 +1,12 @@
 import logging
 
-from telegram.ext import CallbackContext, PrefixHandler, MessageHandler, Filters, run_async
+from telegram.ext import (
+    CallbackContext,
+    PrefixHandler,
+    MessageHandler,
+    Filters,
+    run_async,
+)
 from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
@@ -71,7 +77,9 @@ def whitelist_mngr(update: Update, context: CallbackContext):
         try:
             whitelisted_user = chat.get_member(get_id(entity_text[1:]))["user"]
         except KeyError:
-            message.reply_text("That username isn't in the database. Try again with a user ID.")
+            message.reply_text(
+                "That username isn't in the database. Try again with a user ID."
+            )
             return
 
         except BadRequest:
@@ -84,11 +92,15 @@ def whitelist_mngr(update: Update, context: CallbackContext):
     if message.text.split()[0] == "#addwhitelist":
         whitelist.replace_one(user_dict, user_dict, True)
         message.reply_text(f"Added {whitelisted_user.full_name} to the whitelist!")
-        logging.info(f"{user.full_name} added {whitelisted_user.full_name} to the whitelist!")
+        logging.info(
+            f"{user.full_name} added {whitelisted_user.full_name} to the whitelist!"
+        )
     else:
         whitelist.delete_one(user_dict)
         message.reply_text(f"Removed {whitelisted_user.full_name} from the whitelist!")
-        logging.info(f"{user.full_name} removed {whitelisted_user.full_name} from the whitelist!")
+        logging.info(
+            f"{user.full_name} removed {whitelisted_user.full_name} from the whitelist!"
+        )
 
 
 @run_async
@@ -114,7 +126,9 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-whitelistmngr_handler = PrefixHandler("#", ["addwhitelist", "rmwhitelist"], whitelist_mngr, Filters.group)
+whitelistmngr_handler = PrefixHandler(
+    "#", ["addwhitelist", "rmwhitelist"], whitelist_mngr, Filters.group
+)
 whitelist_handler = PrefixHandler("#", "whitelist", whitelist_check, Filters.group)
 userlogger_handler = MessageHandler(Filters.group, user_logger)
 
@@ -122,5 +136,13 @@ dispatcher.add_handler(userlogger_handler, 2)
 dispatcher.add_handler(whitelistmngr_handler)
 dispatcher.add_handler(whitelist_handler)
 
-add_help("whitelist", "Shows a list of users in the whitelist and their IDs.", True)
-add_help("addwhitelist/rmwhitelist", "Adds or removes a user from the whitelist.", True)
+add_help(
+    "whitelist",
+    "Shows a list of users in the whitelist and their IDs.",
+    admin_only=True,
+)
+add_help(
+    "addwhitelist/rmwhitelist",
+    "Adds or removes a user from the whitelist.",
+    admin_only=True,
+)

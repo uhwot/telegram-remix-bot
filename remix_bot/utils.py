@@ -29,11 +29,8 @@ def delete(message):
         pass
 
 
-def build_menu(buttons,
-               n_cols,
-               header_buttons=None,
-               footer_buttons=None):
-    menu = [buttons[i:i + n_cols] for i in range(0, len(buttons), n_cols)]
+def build_menu(buttons, n_cols, header_buttons=None, footer_buttons=None):
+    menu = [buttons[i : i + n_cols] for i in range(0, len(buttons), n_cols)]
     if header_buttons:
         menu.insert(0, [header_buttons])
     if footer_buttons:
@@ -43,14 +40,18 @@ def build_menu(buttons,
 
 def get_id(username):
     try:
-        return userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"id": 1})["id"]
+        return userlog.find_one(
+            {"username": re.compile(username, re.IGNORECASE)}, {"id": 1}
+        )["id"]
     except TypeError:
         raise KeyError
 
 
 def get_name(username):
     try:
-        return userlog.find_one({"username": re.compile(username, re.IGNORECASE)}, {"name": 1})["name"]
+        return userlog.find_one(
+            {"username": re.compile(username, re.IGNORECASE)}, {"name": 1}
+        )["name"]
     except TypeError:
         raise KeyError
 
@@ -70,7 +71,9 @@ def whitelisted(user_id, chat_id):
     else:
         return False
 
+
 cmds = {}
+
 
 def add_help(cmd, desc, admin_only=False, owner_only=False):
     cmd_list = cmd.split("/")
@@ -85,6 +88,7 @@ def add_help(cmd, desc, admin_only=False, owner_only=False):
 
     cmds[cmd] = desc
 
+
 # Decorators
 def group_id(func):
     def wrapper(update: Update, *args, **kwargs):
@@ -93,6 +97,7 @@ def group_id(func):
 
         if str(update.effective_chat.id) in GROUP_ID:
             func(update, *args, **kwargs)
+
     return wrapper
 
 
@@ -104,6 +109,7 @@ def username(func):
 
         if username or whitelisted(user_id, chat_id):
             func(update, *args, **kwargs)
+
     return wrapper
 
 
@@ -115,6 +121,7 @@ def admin(func):
 
         if user_id in get_admin_ids(bot, chat_id):
             func(update, context, *args, **kwargs)
+
     return wrapper
 
 
@@ -122,4 +129,5 @@ def owner(func):
     def wrapper(update: Update, *args, **kwargs):
         if OWNER_ID and OWNER_ID == update.effective_user.id:
             func(update, *args, **kwargs)
+
     return wrapper

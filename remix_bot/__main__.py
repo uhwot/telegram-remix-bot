@@ -6,13 +6,10 @@ from . import TOKEN, URL, PORT, CERT_PATH, DB_URL
 from .modules import ALL_MODULES
 
 if URL:
-    updater.start_webhook(listen="0.0.0.0",
-                          port=int(PORT),
-                          url_path=TOKEN)
+    updater.start_webhook(listen="0.0.0.0", port=int(PORT), url_path=TOKEN)
     if CERT_PATH:
         logging.info("Webhooks with HTTPS certificate enabled.")
-        updater.bot.set_webhook(URL + TOKEN,
-                                certificate=open(CERT_PATH, "rb"))
+        updater.bot.set_webhook(URL + TOKEN, certificate=open(CERT_PATH, "rb"))
 
     else:
         logging.info("Webhooks without HTTPS certificate enabled.")

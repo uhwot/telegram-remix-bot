@@ -77,7 +77,11 @@ def slap(update: Update, context: CallbackContext):
     hit = random.choice(HIT)
     throw = random.choice(THROW)
 
-    chat.send_message(temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw), ParseMode.MARKDOWN, reply_to_message_id=reply_msg)
+    chat.send_message(
+        temp.format(user1=user1, user2=user2, item=item, hits=hit, throws=throw),
+        ParseMode.MARKDOWN,
+        reply_to_message_id=reply_msg,
+    )
 
 
 @run_async
@@ -128,7 +132,9 @@ def send(update: Update, context: CallbackContext):
     except BadRequest:
         message.reply_text("Couldn't send all messages.")
     except Unauthorized:
-        message.reply_text("Request unauthorized. Are you trying to send a message to a bot?")
+        message.reply_text(
+            "Request unauthorized. Are you trying to send a message to a bot?"
+        )
     else:
         message.reply_text("Messages sent!")
 
@@ -143,4 +149,7 @@ dispatcher.add_handler(send_handler)
 
 add_help("slap", "Slaps a user.")
 add_help("runs", "Why are you running?")
-add_help("send/sendall", "Sends a message to specified groups or users.", owner_only=True)
+add_help(
+    "send/sendall", "Sends a message to specified groups or users.", owner_only=True
+)
+
