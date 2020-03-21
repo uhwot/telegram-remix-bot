@@ -19,6 +19,6 @@ def help(update: Update, context: CallbackContext):
     message.reply_text(msg)
 
 
-help_handler = PrefixHandler("#", "help", help, Filters.group)
-dispatcher.add_handler(help_handler)
+HELP_HANDLER = PrefixHandler("#", "help", help, Filters.group)
+dispatcher.add_handler(HELP_HANDLER)
 add_help("help", "Shows a list of commands and their descriptions.")

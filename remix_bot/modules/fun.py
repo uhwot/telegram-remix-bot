@@ -139,13 +139,13 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Messages sent!")
 
 
-slap_handler = PrefixHandler("#", "slap", slap, Filters.group)
-runs_handler = PrefixHandler("#", "runs", runs, Filters.group)
-send_handler = PrefixHandler("#", ["send", "sendall"], send, Filters.private)
+SLAP_HANDLER = PrefixHandler("#", "slap", slap, Filters.group)
+RUNS_HANDLER = PrefixHandler("#", "runs", runs, Filters.group)
+SEND_HANDLER = PrefixHandler("#", ["send", "sendall"], send, Filters.private)
 
-dispatcher.add_handler(slap_handler)
-dispatcher.add_handler(runs_handler)
-dispatcher.add_handler(send_handler)
+dispatcher.add_handler(SLAP_HANDLER)
+dispatcher.add_handler(RUNS_HANDLER)
+dispatcher.add_handler(SEND_HANDLER)
 
 add_help("slap", "Slaps a user.")
 add_help("runs", "Why are you running?")

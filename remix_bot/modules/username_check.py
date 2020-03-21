@@ -71,6 +71,6 @@ def check(update: Update, context: CallbackContext):
         logging.info(f"{user.full_name} now has a username or has left.")
 
 
-check_handler = MessageHandler(Filters.group, check)
+CHECK_HANDLER = MessageHandler(Filters.group, check)
 
-dispatcher.add_handler(check_handler, 1)
+dispatcher.add_handler(CHECK_HANDLER, 1)

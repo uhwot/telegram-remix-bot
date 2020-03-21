@@ -126,15 +126,15 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-whitelistmngr_handler = PrefixHandler(
+WHITELISTMNGR_HANDLER = PrefixHandler(
     "#", ["addwhitelist", "rmwhitelist"], whitelist_mngr, Filters.group
 )
-whitelist_handler = PrefixHandler("#", "whitelist", whitelist_check, Filters.group)
-userlogger_handler = MessageHandler(Filters.group, user_logger)
+WHITELIST_HANDLER = PrefixHandler("#", "whitelist", whitelist_check, Filters.group)
+USERLOGGER_HANDLER = MessageHandler(Filters.group, user_logger)
 
-dispatcher.add_handler(userlogger_handler, 2)
-dispatcher.add_handler(whitelistmngr_handler)
-dispatcher.add_handler(whitelist_handler)
+dispatcher.add_handler(USERLOGGER_HANDLER, 2)
+dispatcher.add_handler(WHITELISTMNGR_HANDLER)
+dispatcher.add_handler(WHITELIST_HANDLER)
 
 add_help(
     "whitelist",
