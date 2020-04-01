@@ -18,7 +18,7 @@ def check(update: Update, context: CallbackContext):
     chat = update.effective_chat
     bot = context.bot
 
-    guide = "https://gitlab.com/uh_wot/telegram-remix-bot/wikis/How-to-set-a-username"
+    guide = "https://github.com/uhwot/telegram-remix-bot/wiki/How-to-set-a-username"
 
     if user.id == 777000:  # channel messages
         return
