@@ -42,7 +42,7 @@ def check(update: Update, context: CallbackContext):
     logging.info(f"{user.full_name} has no username. Waiting...")
     watchlist.append(user.id)
 
-    temp = f"{user.full_name}, set a username in two minutes or ur gay"
+    temp = f"{user.full_name}, set a username in 2 minutes or you will be kicked."
     button = [InlineKeyboardButton("How to set a username", url=guide)]
     reply_markup = InlineKeyboardMarkup(build_menu(button, n_cols=1))
 
@@ -62,7 +62,7 @@ def check(update: Update, context: CallbackContext):
         chat.unban_member(user.id)  # unban on user = kick
         watchlist.remove(user.id)
         logging.info(f"{user.full_name} has been kicked.")
-        temp_msg = chat.send_message(f"{user.full_name} is gay.")
+        temp_msg = chat.send_message(f"{user.full_name} has been kicked.")
         sleep(120)
         delete(temp_msg)
 
