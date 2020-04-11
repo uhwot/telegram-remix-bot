@@ -94,6 +94,7 @@ def group_id(func):
     def wrapper(update: Update, *args, **kwargs):
         if not GROUP_ID:
             func(update, *args, **kwargs)
+            return
 
         if str(update.effective_chat.id) in GROUP_ID:
             func(update, *args, **kwargs)
