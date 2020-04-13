@@ -1,8 +1,8 @@
 # telegram-remix-bot
 
-Some random Telegram bot made with a bunch of spaghetti code that kicks people who don't have usernames.
+Some random Telegram bot made with a bunch of spaghetti code.
 
-Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) group.
+Made for the [@deemixCommunity](https://t.me/deemixCommunity) group.
 
 # how 2 setup
 
@@ -20,7 +20,7 @@ Made for the [@DeezloaderRemixCommunity](https://t.me/DeezloaderRemixCommunity) 
 
 - `CERT_PATH` (webhooks): Path to your webhook certificate.
 
-- `DB_URL` (database): Your MongoDB database URL. If not set, the whitelist and username logger won't be available.
+- `DB_URL` (database): Your MongoDB database URL. If not set, the username logger won't be available.
 
 2. Move to the bot directory (hint: cd)
 

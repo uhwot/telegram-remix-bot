@@ -11,96 +11,7 @@ from telegram import Update, ParseMode
 from telegram.error import BadRequest
 
 from .. import dispatcher
-from ..utils import get_id, whitelist_db, insert_user, delete, group_id, admin, add_help
-
-
-@run_async
-@group_id
-@admin
-def whitelist_check(update: Update, context: CallbackContext):
-    message = update.effective_message
-    chat = update.effective_chat
-
-    whitelist = whitelist_db[str(chat.id)]
-    ids = []
-
-    for doc in whitelist.find():
-        ids.append(doc["id"])
-
-    msg = "Current whitelist:"
-
-    for id in ids:
-        curr_user = chat.get_member(id)["user"]
-        msg = msg + f"\n• [{curr_user.full_name}](tg://user?id={id}): {id}"
-
-    message.reply_text(msg, ParseMode.MARKDOWN)
-
-
-@run_async
-@group_id
-@admin
-def whitelist_mngr(update: Update, context: CallbackContext):
-    message = update.effective_message
-    user = update.effective_user
-    chat = update.effective_chat
-    args = context.args
-
-    try:
-        args[0]
-    except IndexError:
-        message.reply_text("Mention a user or specify a user ID to use this command.")
-        return
-
-    whitelisted_user = message.parse_entities("text_mention").keys()
-
-    if len(whitelisted_user) != 0:
-        whitelisted_user = next(iter(whitelisted_user))["user"]
-    else:
-        if args[0][0] == "@":
-            message.reply_text("Invalid username.")
-            return
-
-        try:
-            id = int(args[0])
-            whitelisted_user = chat.get_member(id)["user"]
-        except BadRequest:
-            message.reply_text("That user isn't in this chat.")
-            return
-        except ValueError:
-            message.reply_text("Invalid user ID.")
-            return
-
-    if not whitelisted_user:  # user has username
-
-        entity_text = message.parse_entity(message.entities[1])
-
-        try:
-            whitelisted_user = chat.get_member(get_id(entity_text[1:]))["user"]
-        except KeyError:
-            message.reply_text(
-                "That username isn't in the database. Try again with a user ID."
-            )
-            return
-
-        except BadRequest:
-            message.reply_text("That user isn't in this chat.")
-            return
-
-    whitelist = whitelist_db[str(chat.id)]
-    user_dict = {"id": whitelisted_user.id}
-
-    if message.text.split()[0] == "#addwhitelist":
-        whitelist.replace_one(user_dict, user_dict, True)
-        message.reply_text(f"Added {whitelisted_user.full_name} to the whitelist!")
-        logging.info(
-            f"{user.full_name} added {whitelisted_user.full_name} to the whitelist!"
-        )
-    else:
-        whitelist.delete_one(user_dict)
-        message.reply_text(f"Removed {whitelisted_user.full_name} from the whitelist!")
-        logging.info(
-            f"{user.full_name} removed {whitelisted_user.full_name} from the whitelist!"
-        )
+from ..utils import get_id, insert_user, delete, group_id, admin, add_help
 
 
 @run_async
@@ -126,23 +37,5 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-WHITELISTMNGR_HANDLER = PrefixHandler(
-    "#", ["addwhitelist", "rmwhitelist"], whitelist_mngr, Filters.group
-)
-WHITELIST_HANDLER = PrefixHandler("#", "whitelist", whitelist_check, Filters.group)
 USERLOGGER_HANDLER = MessageHandler(Filters.group, user_logger)
-
-dispatcher.add_handler(USERLOGGER_HANDLER, 2)
-dispatcher.add_handler(WHITELISTMNGR_HANDLER)
-dispatcher.add_handler(WHITELIST_HANDLER)
-
-add_help(
-    "whitelist",
-    "Shows a list of users in the whitelist and their IDs.",
-    admin_only=True,
-)
-add_help(
-    "addwhitelist/rmwhitelist",
-    "Adds or removes a user from the whitelist.",
-    admin_only=True,
-)
+dispatcher.add_handler(USERLOGGER_HANDLER, 1)

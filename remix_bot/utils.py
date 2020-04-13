@@ -9,8 +9,6 @@ from . import DB_URL, GROUP_ID, OWNER_ID
 from .mwt import MWT
 
 db_client = pymongo.MongoClient(DB_URL)
-whitelist_db = db_client["whitelist"]
-
 global_db = db_client["global"]
 userlog = global_db["users"]
 
@@ -61,17 +59,6 @@ def insert_user(id, username, name):
     return userlog.replace_one({"id": id}, temp, upsert=True)
 
 
-def whitelisted(user_id, chat_id):
-    if not DB_URL:
-        return False
-
-    whitelist = whitelist_db[str(chat_id)]
-    if whitelist.find_one({"id": user_id}):
-        return True
-    else:
-        return False
-
-
 cmds = {}
 
 
@@ -97,18 +84,6 @@ def group_id(func):
             return
 
         if str(update.effective_chat.id) in GROUP_ID:
-            func(update, *args, **kwargs)
-
-    return wrapper
-
-
-def username(func):
-    def wrapper(update: Update, *args, **kwargs):
-        username = update.effective_user.username
-        user_id = update.effective_user.id
-        chat_id = update.effective_chat.id
-
-        if username or whitelisted(user_id, chat_id):
             func(update, *args, **kwargs)
 
     return wrapper

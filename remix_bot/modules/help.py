@@ -2,13 +2,12 @@ from telegram import Update
 from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
 
 from .. import dispatcher
-from ..utils import group_id, username, add_help
+from ..utils import group_id, add_help
 from .. import utils
 
 
 @run_async
 @group_id
-@username
 def help(update: Update, context: CallbackContext):
     message = update.effective_message
 

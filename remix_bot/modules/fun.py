@@ -6,13 +6,12 @@ from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest, Unauthorized
 
 from .. import DB_URL, dispatcher, OWNER_ID, GROUP_ID
-from ..utils import get_id, get_name, group_id, delete, username, owner, add_help
+from ..utils import get_id, get_name, group_id, delete, owner, add_help
 from ..slap_msgs import *
 
 
 @run_async
 @group_id
-@username
 def slap(update: Update, context: CallbackContext):
     user = update.effective_user
     message = update.effective_message
@@ -86,7 +85,6 @@ def slap(update: Update, context: CallbackContext):
 
 @run_async
 @group_id
-@username
 def runs(update: Update, _):
     update.effective_message.reply_text(random.choice(RUN_STRINGS))
 
