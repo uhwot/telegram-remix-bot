@@ -14,7 +14,6 @@ from .. import dispatcher
 from ..utils import get_id, insert_user, delete, group_id, admin, add_help
 
 
-@run_async
 @group_id
 def user_logger(update: Update, context: CallbackContext):
     # This function inserts user IDs, usernames and names to the database to handle usernames.
@@ -37,5 +36,5 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-USERLOGGER_HANDLER = MessageHandler(Filters.group, user_logger)
+USERLOGGER_HANDLER = MessageHandler(Filters.group, user_logger, run_async=True)
 dispatcher.add_handler(USERLOGGER_HANDLER, 1)

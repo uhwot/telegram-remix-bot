@@ -10,7 +10,6 @@ from ..utils import get_id, get_name, group_id, delete, owner, add_help
 from ..slap_msgs import *
 
 
-@run_async
 @group_id
 def slap(update: Update, context: CallbackContext):
     user = update.effective_user
@@ -83,13 +82,11 @@ def slap(update: Update, context: CallbackContext):
     )
 
 
-@run_async
 @group_id
 def runs(update: Update, _):
     update.effective_message.reply_text(random.choice(RUN_STRINGS))
 
 
-@run_async
 @owner
 def send(update: Update, context: CallbackContext):
     message = update.effective_message
@@ -137,9 +134,9 @@ def send(update: Update, context: CallbackContext):
         message.reply_text("Messages sent!")
 
 
-SLAP_HANDLER = PrefixHandler("#", "slap", slap, Filters.group)
-RUNS_HANDLER = PrefixHandler("#", "runs", runs, Filters.group)
-SEND_HANDLER = PrefixHandler("#", ["send", "sendall"], send, Filters.private)
+SLAP_HANDLER = PrefixHandler("#", "slap", slap, Filters.group, run_async=True)
+RUNS_HANDLER = PrefixHandler("#", "runs", runs, Filters.group, run_async=True)
+SEND_HANDLER = PrefixHandler("#", ["send", "sendall"], send, Filters.private, run_async=True)
 
 dispatcher.add_handler(SLAP_HANDLER)
 dispatcher.add_handler(RUNS_HANDLER)

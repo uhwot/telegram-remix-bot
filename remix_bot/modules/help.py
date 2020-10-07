@@ -6,7 +6,6 @@ from ..utils import group_id, add_help
 from .. import utils
 
 
-@run_async
 @group_id
 def help(update: Update, context: CallbackContext):
     message = update.effective_message
@@ -18,6 +17,6 @@ def help(update: Update, context: CallbackContext):
     message.reply_text(msg)
 
 
-HELP_HANDLER = PrefixHandler("#", "help", help, Filters.group)
+HELP_HANDLER = PrefixHandler("#", "help", help, Filters.group, run_async=True)
 dispatcher.add_handler(HELP_HANDLER)
 add_help("help", "Shows a list of commands and their descriptions.")
