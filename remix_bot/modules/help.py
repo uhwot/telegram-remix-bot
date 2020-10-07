@@ -1,5 +1,5 @@
 from telegram import Update
-from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
+from telegram.ext import CallbackContext, PrefixHandler, Filters
 
 from .. import dispatcher
 from ..utils import group_id, add_help

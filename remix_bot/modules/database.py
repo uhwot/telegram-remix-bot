@@ -5,7 +5,6 @@ from telegram.ext import (
     PrefixHandler,
     MessageHandler,
     Filters,
-    run_async,
 )
 from telegram import Update, ParseMode
 from telegram.error import BadRequest

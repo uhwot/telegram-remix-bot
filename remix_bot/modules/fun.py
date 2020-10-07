@@ -1,7 +1,7 @@
 import random
 
 from telegram import Update, ParseMode
-from telegram.ext import CallbackContext, run_async, PrefixHandler, Filters
+from telegram.ext import CallbackContext, PrefixHandler, Filters
 from telegram.utils.helpers import escape_markdown
 from telegram.error import BadRequest, Unauthorized
 
