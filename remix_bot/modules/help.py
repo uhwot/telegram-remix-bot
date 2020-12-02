@@ -17,6 +17,6 @@ def help(update: Update, context: CallbackContext):
     message.reply_text(msg)
 
 
-HELP_HANDLER = PrefixHandler("#", "help", help, Filters.group, run_async=True)
+HELP_HANDLER = PrefixHandler("#", "help", help, Filters.chat_type.groups, run_async=True)
 dispatcher.add_handler(HELP_HANDLER)
 add_help("help", "Shows a list of commands and their descriptions.")

@@ -35,5 +35,5 @@ def user_logger(update: Update, context: CallbackContext):
             insert_user(forward_from.id, forward_from.username, forward_from.full_name)
 
 
-USERLOGGER_HANDLER = MessageHandler(Filters.group, user_logger, run_async=True)
+USERLOGGER_HANDLER = MessageHandler(Filters.chat_type.groups, user_logger, run_async=True)
 dispatcher.add_handler(USERLOGGER_HANDLER, 1)
